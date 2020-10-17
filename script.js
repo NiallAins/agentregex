@@ -55,7 +55,7 @@ conInput.addEventListener('keyup', e => {
           } else {
             matches = '\n[No matches found]';
           }
-          loadText(matches, conOutput);
+          loadText(matches);
           break;
 
         //
@@ -65,8 +65,7 @@ conInput.addEventListener('keyup', e => {
           loadText(
             text
               .document[currentMission]
-              .replace(new RegExp(command[1], 'g'), command[2]),
-            conOutput
+              .replace(new RegExp(command[1], 'g'), command[2])
           );
           break;
 
@@ -77,17 +76,14 @@ conInput.addEventListener('keyup', e => {
           let count = text
             .document[currentMission]
             .match(new RegExp(command[1], 'g'))
-          loadText(
-            count ? count.length : '0',
-            conOutput
-          );
+          loadText(count ? count.length : '0');
           break;
         
         //
         // Get mission details
         //
         case 'mission':
-          loadText(text.mission[currentMission][currentSubMission], conOutput);
+          loadText(text.mission[currentMission][currentSubMission]);
           break;
 
         //
@@ -100,30 +96,27 @@ conInput.addEventListener('keyup', e => {
           } else {
             hint = '\nNo hints available';
           }
-          loadText('\n<span class="title">-- REQUESTNG HINT</span>\n' + hint, conOutput);
+          loadText('\n<span class="title">-- REQUESTNG HINT</span>\n' + hint);
           break;
 
         //
         // Submit solution
         //
         case 'submit':
-          if (
-            currentMission === 0 ||
-            text.solution[currentMission][currentSubMission] === conOutput.innerText
-          ) {
+          if (currentMission === 0 || checkSolution()) {
             currentSubMission += 1;
             if (currentSubMission === text.mission[currentMission].length) {
               currentSubMission = 0;
               currentMission += 1;
-              loadText(text.document[currentMission], docOutput);
+              loadText(text.document[currentMission], true);
             }
-            loadText(text.mission[currentMission][currentSubMission], conOutput);
+            loadText(text.mission[currentMission][currentSubMission]);
           } else {
             let failText =
               text.fail.header +
               text.fail.message[Math.floor(Math.random() * text.fail.message.length)] +
               text.fail.footer;
-            loadText(failText, conOutput);
+            loadText(failText);
           }
           
           break;
@@ -133,11 +126,11 @@ conInput.addEventListener('keyup', e => {
         //
         default:
           if (!text[command[0]]) {
-            loadText('</br><span class="error">Invalid command</span>', conOutput);
+            loadText('</br><span class="error">Invalid command</span>');
           } else {
             loadText(
-              text[command[0]][command[1] || 'default'] || '<br /><span class="error">Invalid command option</span>',
-              conOutput
+              text[command[0]][command[1] || 'default'] ||
+              '<br /><span class="error">Invalid command option</span>'
             );
           }
           break;
@@ -148,7 +141,7 @@ conInput.addEventListener('keyup', e => {
     //
     } catch(e) {
       console.log(e);
-      loadText('</br><span class="error">Invalid command</span>', conOutput);
+      loadText('</br><span class="error">Invalid command</span>');
     }
     history.unshift(conInput.value);
     historyPlace = -1;
@@ -206,50 +199,83 @@ function parseCommand(str) {
 }
 
 //
+// Compare output with solution
+//
+function checkSolution() {
+  let
+    a = text.solution[currentMission][currentSubMission],
+    b = conOutput.innerText;
+
+  a = a.toString().replace(/[\n\s]/g, '');
+  b = a.toString().replace(/[\n\s]/g, '');
+
+  return a === b;
+}
+
+//
 // Text loading effect
 //
 let
   conTextInterval,
   docTextInterval;
-function loadText(stream, target) {
-  if (target === conOutput) {
-    let line = 0;
-    target.innerHTML = '';
-    stream = stream.toString().split('\n');
-    conTextInterval = setInterval(() => {
-      target.innerHTML += stream[line] + '\n';
-      line += 1;
-      if (target.clientHeight > 480) {
-        if (stream.length - line > 0) {
-          target.innerHTML += `\n[${stream.length - line} more lines]`;
-        }
-        clearInterval(conTextInterval);
-      }
-      if (line >= stream.length) {
-        clearInterval(conTextInterval);
-      }
-    }, 30);
-  } else {
-    let char = 0;
-    target.innerHTML = '';
-    docTextInterval = setInterval(() => {
-      target.innerHTML += stream[char];
-      char += 1;
-      if (target.clientHeight > 550) {
-        if (stream.length - char > 0) {
-          target.innerHTML += `\n[${stream.length - char} more lines]`;
-        }
-        clearInterval(docTextInterval);
-      }
-      if (char >= stream.length) {
-        clearInterval(docTextInterval);
-      }
-    }, 2);
+function loadText(stream, isDoc = false) {
+  let
+    pos = 0,
+    target = isDoc ? docOutput : conOutput,
+    interval = isDoc ? docTextInterval : conTextInterval,
+    end = false;
+
+  stream = isDoc ? stream.toString() : stream.toString().split('\n')
+  clearInterval(interval);
+  target.innerHTML = '';
+
+  if (assets.textClick.paused) {
+    assets.textClick.play();
   }
+
+  interval = setInterval(
+    () => {
+      target.innerHTML += stream[pos] + (isDoc ? '' : '\n');
+      pos += 1;
+      if (
+        target.clientHeight > (isDoc ? 550 :480) &&
+        stream.length - pos > 0
+      ) {
+        target.innerHTML += `\n[${stream.length - pos} more lines]`;
+        end = true;
+      }
+      if (pos >= stream.length || end) {
+        clearInterval(interval);
+        isDoc ? docTextInterval = 0 : conTextInterval = 0;
+        if (!docTextInterval && !conTextInterval) {
+          assets.textClick.pause();
+        }
+      }
+    },
+    isDoc ? 2 : 30
+  );
+  isDoc ? docTextInterval = interval : conTextInterval = interval;
 }
 
 //
-// Game Init
+// Load assets
 //
-loadText(text.help.default, conOutput);
-conInput.focus();
+const assets = {
+  textClick: new Audio('./textClick.wav')
+};
+
+//
+// Game entry point
+//
+function init() {
+  conInput.focus();
+
+  assets.textClick.loop = true;
+  assets.textClick.oncanplaythrough = () => {
+    assets.textClick.oncanplaythrough = () => {};
+    loadText(text.help.default);
+  }
+  assets.textClick.load();
+}
+
+init();

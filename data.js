@@ -44,7 +44,9 @@ We believe several brothers of the infamous Brunner family are currently working
 Find out how many of these brothers are included in the data
 
 Enter <i>submit</i> once you have generated the correct output
-Enter <i>hint</i> to request assistance `
+Enter <i>hint</i> to request assistance `,
+      `
+Mission successful!`
     ]
   ],
   hint: [
@@ -74,13 +76,13 @@ You have submitted an incorrect output`,
 
 Enter <i>submit</i> again once you have generated the correct output
 
-Enter <i>hint</i> to request assisstance 
+Enter <i>hint</i> to request assistance 
 Enter <i>skip</i> to give up on this mission goal`,
     message: [
       '\nAs a result of your incompetence, our enemies have carpet bombed a small rural village!',
       '\nYou have brought shame on our unit in the eyes of The Commander!',
-      '\nYour error has lead to one our agents in the field being waterboarded!',
-      '\nYou are a failure, just as your father was before you!',
+      '\nYour error has led to one our agents in the field being waterboarded!',
+      '\nYou are a failure, just like your father!',
       '\nA messenger has been dispatched to inform your mother of your incompetence',
       '\nYou have been added to The Commander\'s list.. and not the good one!',
       '\nWhy has the lord brought you to me, why must I be punished!'
@@ -243,7 +245,7 @@ Type <i>regex all</i> for a summary of all special characters
 <span class="title">-- REGEX or</span>
 
 |
-  matches either the charcter before or the character after this symbol
+  matches either the character before or the character after this symbol
   ex. <i>/ab|c/</i> matches 'ab' and 'ac'
 
 
