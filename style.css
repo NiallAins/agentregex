@@ -1,0 +1,175 @@
+@-webkit-keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: #222;
+}
+
+main, input {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+  color: #eee;
+  font-weight: 300;
+}
+
+main {
+  height: 100vh;
+  width: calc(100vw - 32px);
+  max-width: 1500px;
+  height: 600px;
+  margin: 16px auto;
+  margin-top: calc(50vh - 400px);
+}
+
+main .title {
+  color: #eee;
+  font-weight: 400;
+}
+
+main .error {
+  color: #e23c3c;
+  font-weight: 400;
+}
+
+main i {
+  padding: 0 0.2em;
+  border-radius: 3px;
+  font-size: 0.9em;
+  font-weight: 400;
+  font-style: normal;
+  color: #eee;
+  background: #383838;
+}
+
+main b {
+  font-weight: 400;
+  color: #11d272;
+}
+
+.frame {
+  border: 2px solid #555;
+  border-radius: 5px;
+}
+
+#docContain,
+#conContain {
+  float: left;
+  height: 100%;
+  padding: 32px 16px 8px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow: hidden;
+}
+
+#docContain::after,
+#conContain::after {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  font-size: 0.8em;
+  color: #eee;
+}
+
+#docContain {
+  position: relative;
+  width: calc(35% - 50px);
+  margin-left: 16px;
+}
+
+#docContain::after {
+  content: 'DOCUMENT';
+}
+
+#conContain {
+  position: relative;
+  width: calc(65% - 50px);
+}
+
+#conContain::after {
+  content: 'CONSOLE OUTPUT';
+}
+
+#conContain #conOutput {
+  color: #11d272;
+  max-height: calc(100% - 54px);
+  overflow: hidden;
+}
+
+#conContain #conOverflow {
+  position: absolute;
+  bottom: 62px;
+  left: 16px;
+  height: 32px;
+  right: 16px;
+  background: #222;
+}
+
+#conContain input {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  width: calc(100% - 16px);
+  height: 32px;
+  background: #222;
+  padding: 4px 8px 4px 40px;
+  -webkit-transition: border-color 0.5s;
+  transition: border-color 0.5s;
+  font-weight: 400;
+  color: #eee;
+}
+
+#conContain input:focus, #conContain input:hover {
+  border-color: #bbb;
+  outline: none;
+}
+
+#conContain::before {
+  content: '>';
+  position: absolute;
+  left: 26px;
+  bottom: 10px;
+  z-index: 10;
+  font-size: 1.5em;
+  -webkit-animation: blink 2s infinite;
+          animation: blink 2s infinite;
+  color: #aaa;
+  font-family: 'courier new';
+  font-weight: bold;
+}
+/*# sourceMappingURL=style.css.map */

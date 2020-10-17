@@ -1,0 +1,62 @@
+<html>
+  <head>
+    <style>
+      textarea {
+        width: 400px;
+        height: 200px;
+      }
+      #output {
+        white-space: pre-wrap;
+        word-break: break-all;
+        width: 400px;
+      }
+    </style>
+  </head>
+  <body>
+    <button onclick="getPattern()">Get Name</button>
+    <br/><br/>
+    <textarea id="pattern"></textarea>
+    <br/><br/>
+    <div contentEditable="true" id="output"></div>
+    
+    <script>
+      const names = {
+        first: ["Anna","Alex","Maria","Nikita","Anastasia","George","Julia","Dima","Kate","Daniel","Nastya","Adam","Dasha","Sasha","Karolina","Vlad","Olga","David","Alina","Sergey","Natalia","Alexander","Alexandra","Ivan","Marina","Mateusz","Monika","Artem","Victoria","Martin","Irina","Peter","Marta","Andrey","Kasia","Pavel","Veronika","Anton","Katya","Andrew","Mary","Nick","Paulina","John","Dominika","Max","Liza","Dmitry","Elena","Jakub","Daria","Igor","Tanya","Szymon","Ola","Michael","Aleksandra","Diana"],
+        last: ["Jones","Taylor","Brown","Williams","Wilson","Wright","Thompson","Evans","Walker","White","Green","Hall","Wood","Jackson","Clarke","Meier","Schmid","Keller","Weber","Huber","Meyer","Schneider","Steiner","Fischer","Brunner","Baumann","Gerber","Frei","Moser","Jones","Williams","Davies","Evans","Thomas","Roberts","Lewis","Hughes","Morgan","Griffiths","Edwards","Smith","James","Rees","Jenkins","Owen","Price","Phillips","Moss","Dris"]
+      };
+
+      function getPattern() {
+        let area = document.getElementById('pattern');
+        let record = '';
+        for (let i = 0; i < 100; i++) {
+          record += area.value
+            .replace(/\$0/g, () => Math.floor(Math.random() * 10))
+            .replace(/\$n/g, getName())
+            .replace(/\$fn/g, getName('f'))
+            .replace(/\$ln/g, getName('l'))
+        }
+        document.getElementById('output').innerText = record;
+      }
+
+      function getName(type) {
+        let first = names.first[Math.floor(Math.random() * names.first.length)],
+            last = names.last[Math.floor(Math.random() * names.last.length)];
+        
+        if (Math.random() < 0.3) {
+          let middle = names.first[Math.floor(Math.random() * names.first.length)];
+          if (Math.random() < 0.3) {
+            middle = middle[0];
+          }
+          first += ' ' + middle;
+        }
+        
+        if (type === 'f') {
+          return first;
+        } else if (type === 'l') {
+          return last;
+        }
+        return first + ' ' + last;
+      }
+    </script>
+  </body>
+</html>
