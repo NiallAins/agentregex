@@ -118,7 +118,6 @@ conInput.addEventListener('keyup', e => {
               text.fail.footer;
             loadText(failText);
           }
-          
           break;
 
         //
@@ -207,7 +206,7 @@ function checkSolution() {
     b = conOutput.innerText;
 
   a = a.toString().replace(/[\n\s]/g, '');
-  b = a.toString().replace(/[\n\s]/g, '');
+  b = b.toString().replace(/[\n\s]/g, '');
 
   return a === b;
 }

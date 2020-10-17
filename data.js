@@ -3,7 +3,7 @@ const text = {
     default: `
 <span class="title">-- HELP</span>
 
-Enter commands into the console to perform actions
+Enter commands in the console to perform actions
 Use the up and down arrow keys to scroll through previous commands
 Enter the command <i>help</i> to return to this screen
 
@@ -79,12 +79,12 @@ Enter <i>submit</i> again once you have generated the correct output
 Enter <i>hint</i> to request assistance 
 Enter <i>skip</i> to give up on this mission goal`,
     message: [
-      '\nAs a result of your incompetence, our enemies have carpet bombed a small rural village!',
-      '\nYou have brought shame on our unit in the eyes of The Commander!',
-      '\nYour error has led to one our agents in the field being waterboarded!',
+      '\nAs a result of your incompetence, our enemies have carpet bombed a small rural village',
+      '\nYou have brought shame on our unit in the eyes of The Commander',
+      '\nYour error has led to one our agents in the field being waterboarded',
       '\nYou are a failure, just like your father!',
       '\nA messenger has been dispatched to inform your mother of your incompetence',
-      '\nYou have been added to The Commander\'s list.. and not the good one!',
+      '\nYou have been added to The Commander\'s list.. and not the good one',
       '\nWhy has the lord brought you to me, why must I be punished!'
     ]
   },
