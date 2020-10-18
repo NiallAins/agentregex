@@ -5,9 +5,11 @@ const text = {
 
 Enter commands in the console to perform actions
 Use the up and down arrow keys to scroll through previous commands
-Enter the command <i>help</i> to return to this screen
 
-You can use the following commands:
+You can use the following commands at any time:
+
+  <i>help</i>
+    open this screen
 
   <i>mission</i>
     get information on your current mission
@@ -30,8 +32,8 @@ To minimise the chance of detection by our enemies' bandwidth monitoring systems
 The Commander wishes you luck
 
 
-Enter the command <i>submit</i> once you are ready to receive your first mission
-Enter the command <i>help</i> to return to the help page
+Enter <i>submit</i> once you are ready to receive your first mission
+Enter <i>help</i> to return to the help page
 `,
     ],
     [
@@ -228,18 +230,18 @@ Enter <i>skip</i> to give up on this mission goal`,
 Regex is a pattern matching tool
 It is used to perform find and replace actions on a document
 
-Regex commands are enclosed in forward slashes
+Regex patterns are enclosed in forward slashes
 ex. <i>/abc/</i> will find all instances of 'abc' in a document
 
 Special characters can be used to find more advanced patterns
 ex. <i>/ab[1-3]/</i> uses the 'range' brackets to find all instances of 'ab' followed
     by a number between 1 and 3
 
-Type <i>regex</i> followed by one of keywords below to learn more special characters:
+Enter <i>regex</i> followed by one of keywords below to learn more special characters:
   <i>or</i>       <i>wildcard</i>    <i>repeat</i>    <i>group</i>    <i>range</i>
   <i>special</i>   <i>escape</i>     <i>replace</i>
 
-Type <i>regex all</i> for a summary of all special characters
+Enter <i>regex all</i> for a summary of all special characters
   `,
     or: `
 <span class="title">-- REGEX or</span>
