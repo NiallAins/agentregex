@@ -29,6 +29,7 @@ conInput.addEventListener('keyup', e => {
   // Enter a command
   //
   if (e.code == 'Enter') {
+    document.getElementById('debug').innerHTML += '\n' + conInput.value;
     if (conInput.value === '') {
       return;
     }
@@ -39,45 +40,63 @@ conInput.addEventListener('keyup', e => {
         //
         // Find command
         //
-        case 'find':
-          let matches = text
-            .document[currentMission]
-            .match(new RegExp(command[1], 'g'))
-          if (matches) {
-            matches = matches
-              .map(m =>
-                m.replace(
-                  new RegExp(command[1]),
-                  command[2] || '$&'
+        case 'find': {
+          let params = parseRegex(command[1]);
+          if (params) {
+            let matches = text
+              .document[currentMission]
+              .match(new RegExp(params[0], 'g'))
+            if (matches) {
+              matches = matches
+                .map(m =>
+                  m.replace(
+                    new RegExp(params[0]),
+                    params[1] || '$&'
+                  )
                 )
-              )
-              .join('\n')
+                .join('\n')
+            } else {
+              matches = '\n[No matches found]';
+            }
           } else {
-            matches = '\n[No matches found]';
-          }
-          loadText(matches);
+            loadText('</br><span class="error">Invalid regex:</span> <i>' + [command[1], command[2]].join(' ') + '</i>');
+          } 
           break;
+        }
 
         //
         // Replace command
         //
-        case 'replace':
-          loadText(
-            text
-              .document[currentMission]
-              .replace(new RegExp(command[1], 'g'), command[2])
-          );
+        case 'replace': {
+          let params = parseRegex(command[1]);
+          if (params) {
+            loadText(
+              text
+                .document[currentMission]
+                .replace(new RegExp(params[0], 'g'), params[2])
+            );
+          } else {
+            loadText('</br><span class="error">Invalid regex:</span> <i>' + [command[1], command[2]],join(' ') + '</i>');
+          }
           break;
+        }
 
         //
         // Count command
         //
-        case 'count':
-          let count = text
-            .document[currentMission]
-            .match(new RegExp(command[1], 'g'))
-          loadText(count ? count.length : '0');
+        case 'count': {
+          let params = parseRegex(command[1]);
+          if (params) {
+            let count = text
+              .document[currentMission]
+              .match(new RegExp(params[0], 'g'));
+            console.log(count);
+            loadText(count ? count.length : '0');
+          } else {
+            loadText('</br><span class="error">Invalid regex:</span> <i>' + command[1] + '</i>');
+          }
           break;
+        }
         
         //
         // Get mission details
@@ -125,15 +144,15 @@ conInput.addEventListener('keyup', e => {
         //
         default:
           if (!text[command[0]]) {
-            loadText('</br><span class="error">Invalid command</span>');
+            loadText('</br><span class="error">Invalid command:</span> <i>' + command.join(' ') + '</i>');
           } else {
             loadText(
               text[command[0]][command[1] || 'default'] ||
-              '<br /><span class="error">Invalid command option</span>'
+              '<br /><span class="error">Invalid command option:</span> <i>' + command[1] + '</i>'
             );
           }
           break;
-      }
+       }
 
     //
     // Invalid command error
@@ -168,11 +187,11 @@ conInput.addEventListener('keyup', e => {
   //  Text input listener to render regex matches on document
   //
   else {
-    let regex = conInput.value.match(/\/(.*)\//);
+    let regex = conInput.value.match(/\/([^\/]*)/);
     if (regex && regex[1]) {
       try {
-        docOutput.innerHTML = text
-          .document[currentMission]
+        docOutput.innerHTML =
+          docOutput.innerText
           .replace(new RegExp(regex[1], 'g'), '<b>$&</b>'); 
       } catch(e) {}
     }
@@ -183,18 +202,33 @@ conInput.addEventListener('keyup', e => {
 // Parse comand line input arguments
 //
 function parseCommand(str) {
-  if (str === '') {
-    return ['', '', ''];
-  }
   let parts = str.split(' ');
   if (parts[0] === 'find' || parts[0] === 'count' || parts[0] === 'replace') {
-    let params = parts
-      .join(' ')
-      .match(/\/(.*)\/(?: '(.*)')?$/);
-    parts[1] = params[1] || '';
-    parts[2] = params[2] || '';
+    let command = parts.shift();
+    return [command, parts.join(' ')];
   }
   return parts;
+}
+
+//
+// Parse regex function arguments
+//
+function parseRegex(pattern) {
+  console.log(pattern);
+  if (!pattern.match(/\/.*\//)) {
+    return false;
+  }
+  if (pattern.match(/\/.*\/ '/) && !str.match(/\/.*\/ '.*'/)) {
+    return false;
+  }
+  try {
+    let parts = pattern.match(/\/(.*)\/(?: '(.*)')?/);
+    // Test valid RegEx
+    ''.replace(new RegExp(parts[1]), parts[2] || '');
+    return [parts[1], parts[2]];
+  } catch(e) {
+    return false;
+  }
 }
 
 //

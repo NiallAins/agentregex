@@ -15,6 +15,26 @@ $c_text_r: #e23c3c;
   100% { opacity: 1; }
 }
 
+#debug {
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  width: 200px;
+  height: 50px;
+  border: 1px solid $c-text_r;
+  margin-top: 20px;
+  overflow: hidden;
+  opacity: 0.5;
+  color: $c_text_d;
+  font-size: 12px;
+  background: $c_bg;
+  resize: none;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -24,9 +44,9 @@ body {
 
 main, input {
   font-family: 'Roboto Mono', monospace;
-  font-size: 15px;
   color: $c_text_l;
   font-weight: 300;
+  font-size: 15px;
 }
 
 main {
@@ -48,13 +68,21 @@ main {
   }
   
   i {
-    padding: 0 0.2em;
-    border-radius: 3px;
+    padding: 0 0.2rem;
+    border-radius: 0.2em;
     font-size: 0.9em;
     font-weight: 400;
     font-style: normal;
     color: $c_text_l;
     background: $c_bg_l;
+  }
+
+  .i-list {
+    font-size: 0.9em;
+
+    i {
+      font-size: 1em;
+    }
   }
   
   b {

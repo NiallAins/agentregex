@@ -6,7 +6,7 @@ const text = {
 Enter commands in the console to perform actions
 Use the up and down arrow keys to scroll through previous commands
 
-You can use the following commands at any time:
+Commands:
 
   <i>help</i>
     open this screen
@@ -45,7 +45,7 @@ We believe several brothers of the infamous Brunner family are currently working
 
 Find out how many of these brothers are included in the data
 
-Enter <i>submit</i> once you have generated the correct output
+Enter <i>submit</i> once you have the correct information in the command output
 Enter <i>hint</i> to request assistance `,
       `
 Mission successful!`
@@ -238,11 +238,10 @@ ex. <i>/ab[1-3]/</i> uses the 'range' brackets to find all instances of 'ab' fol
     by a number between 1 and 3
 
 Enter <i>regex</i> followed by one of keywords below to learn more special characters:
-  <i>or</i>       <i>wildcard</i>    <i>repeat</i>    <i>group</i>    <i>range</i>
-  <i>special</i>   <i>escape</i>     <i>replace</i>
+  <span class="i-list"><i>or</i>       <i>wildcard</i>      <i>repeat</i>    <i>group</i></span>
+  <span class="i-list"><i>range</i>    <i>whitespace</i>    <i>escape</i>    <i>replace</i></span>
 
-Enter <i>regex all</i> for a summary of all special characters
-  `,
+Enter <i>regex all</i> for a summary of all special characters`,
     or: `
 <span class="title">-- REGEX or</span>
 
@@ -252,9 +251,8 @@ Enter <i>regex all</i> for a summary of all special characters
 
 
 More options for <i>regex</i> command:
-  <i>wildcard</i>    <i>repeat</i>    <i>group</i>    <i>range</i>
-  <i>special</i>     <i>escape</i>    <i>replace</i> 
-  `,
+  <span class="i-list"><i>wildcard</i>      <i>repeat</i>    <i>group</i>      <i>range</i></span>
+  <span class="i-list"><i>whitespace</i>    <i>escape</i>    <i>replace</i>    <i>all</i></span>`,
     wildcard: `
 -- REGEX wildcard
 
@@ -264,8 +262,8 @@ More options for <i>regex</i> command:
 
 
 More options for <i>regex</i> command:
-  <i>or</i>       <i>repeat</i>     <i>group</i>
-  <i>range</i>    <i>special</i>    <i>escape</i>    <i>replace</i>`,
+  <span class="i-list"><i>or</i>            <i>repeat</i>    <i>group</i>       <i>range</i></span>
+  <span class="i-list"><i>whitespace</i>    <i>escape</i>    <i>replace</i>    <i>all</i></span>`,
     repeat: `
 <span class="title">-- REGEX repeat</span>
 
@@ -275,11 +273,11 @@ More options for <i>regex</i> command:
 
 +
   matches the previous character 1 or more times
-  ex. <i>/ab*/</i> matches 'ab', 'abbbbbb', etc.
+  ex. <i>/ab+/</i> matches 'ab', 'abbbbbb', etc.
 
 ?
   matches the previous character 0 or 1 times
-  ex. <i>/ab*/</i> matches 'a' and 'ab'
+  ex. <i>/ab?/</i> matches 'a' and 'ab'
 
 {}
   specifies the number of times the previous character can repeat
@@ -288,9 +286,9 @@ More options for <i>regex</i> command:
       <i>/ab{2,}/</i>    matches 'a' followed by 'b' 2 or more times
 
 
-More options for <i>regex</i> command:
-  <i>or</i>       <i>wildcard</i>    <i>group</i>    <i>range</i>
-  <i>special</i>     <i>escape</i>    <i>replace</i> `,
+More options for <i>regex</i> command:<span class="i-list">
+  <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>group</i>      <i>range</i></span>
+  <span class="i-list"><i>whitespace</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     range: `
 <span class="title">-- REGEX range</span>
 
@@ -310,9 +308,9 @@ More options for <i>regex</i> command:
       <i>/[^0-6]/</i> matches '7', '8', '9', etc.
 
 
-More options for <i>regex</i> command:
-  <i>or</i>      <i>wildcard</i>   <i>repeat</i>    <i>group</i>
-  <i>special</i>    <i>escape</i>  <i>replace</i>`,
+More options for <i>regex</i> command:<span class="i-list">
+  <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>repeat</i>     <i>group</i></span>
+  <span class="i-list"><i>whitespace</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     group: `
 <span class="title">-- REGEX group</span>
 
@@ -321,9 +319,9 @@ More options for <i>regex</i> command:
   ex. <i>/a(bc)+/</i> matches 'abc', 'abcbc', 'abcbcbc', etc.
 
 
-More options for <i>regex</i> command:
-  <i>or</i>        <i>wildcard</i>    <i>repeat</i>    <i>range</i>
-  <i>special</i>    <i>escape</i>     <i>replace</i>`,
+More options for <i>regex</i> command:<span class="i-list">
+  <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>repeat</i>     <i>range</i></span>
+  <span class="i-list"><i>whitespace</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     replace: `
 <span class="title">-- REGEX replace</span>
 
@@ -336,23 +334,11 @@ $1
   ex. <i>replace /(ab)(cd)/ '$2 ef $1'</i> will turn the text 'adcd' into 'cd ef ab'
 
 
-More options for <i>regex</i> command:
-  <i>or</i>       <i>wildcard</i>   <i>repeat</i>    <i>group</i>
-  <i>range</i>    <i>special</i>    <i>escape</i>`,
-    special: `
-<span class="title">-- REGEX special</span>
-
-^
-  matches the start of a line
-
-$
-  matches the end of a line
-
-\\n
-  matches a line break
-
-\\t
-  matches a tab character
+More options for <i>regex</i> command:<span class="i-list">
+  <span class="i-list"><i>or</i>       <i>wildcard</i>      <i>repeat</i>    <i>group</i></span>
+  <span class="i-list"><i>range</i>    <i>whitespace</i>    <i>escape</i>    <i>all</i></span>`,
+    whitespace: `
+<span class="title">-- REGEX whitespace</span>
 
 \\s
   matches any whitespace character
@@ -360,10 +346,15 @@ $
 \\S
   matches any non-whitespace character
 
+\\n
+  matches a new line break
 
-More options for <i>regex</i> command:
-  <i>or</i>       <i>wildcard</i>    <i>repeat</i>    <i>group</i>
-  <i>range</i>    <i>escape</i>      <i>replace</i>`,
+\\t
+  matches a tab character
+
+More options for <i>regex</i> command:<span class="i-list">
+  <span class="i-list"><i>or</i>       <i>wildcard</i>    <i>repeat</i>     <i>group</i></span>
+  <span class="i-list"><i>range</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     escape: `
 <span class="title">-- REGEX escape</span>
 
@@ -373,8 +364,8 @@ More options for <i>regex</i> command:
 
 
 More options for <i>regex</i> command:
-  <i>or</i>       <i>wildcard</i>    <i>repeat</i>    <i>group</i>
-  <i>range</i>    <i>special</i>     <i>replace</i>`,
+  <span class="i-list"><i>or</i>       <i>wildcard</i>      <i>repeat</i>    <i>group</i></span>
+  <span class="i-list"><i>range</i>    <i>whitespace</i>    <i>replace</i>   <i>all</i></span>`,
     all: `
 <span class="title">-- REGEX all</span>
 
@@ -392,8 +383,6 @@ More options for <i>regex</i> command:
 (abc)  treat these characters as a group  
 $&     insert the matched pattern
 $2     insert the 2nd group within the matched pattern
-^      start of a line
-$      end of a line
 \\n     line break
 \\t     tab character
 \\s     any whitespace character

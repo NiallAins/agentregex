@@ -1,0 +1,6 @@
+Sinead
+ - Didn't know how to submit
+ - case sensitve
+ - straight to mission
+ - Didnt go into regex details
+ - didnt look at functions
