@@ -45,18 +45,19 @@ conInput.addEventListener('keyup', e => {
           if (params) {
             let matches = text
               .document[currentMission]
-              .match(new RegExp(params[0], 'g'))
+              .match(new RegExp(params[0], 'gi'))
             if (matches) {
-              matches = matches
-                .map(m =>
+              loadText(
+                matches.map(m =>
                   m.replace(
                     new RegExp(params[0]),
                     params[1] || '$&'
                   )
                 )
                 .join('\n')
+              )
             } else {
-              matches = '\n[No matches found]';
+              loadText('\n[No matches found]');
             }
           } else {
             loadText('</br><span class="error">Invalid regex:</span> <i>' + [command[1], command[2]].join(' ') + '</i>');
@@ -71,13 +72,14 @@ conInput.addEventListener('keyup', e => {
           let params = parseRegex(command[1]);
           if (params) {
             loadText(
-              text
-                .document[currentMission]
-                .replace(new RegExp(params[0], 'g'), params[2])
+              text.document[currentMission].replace(
+                new RegExp(params[0], 'gi'),
+                params[1]
+              )
             );
           } else {
-            loadText('</br><span class="error">Invalid regex:</span> <i>' + [command[1], command[2]],join(' ') + '</i>');
-          }
+            loadText('</br><span class="error">Invalid regex:</span> <i>' + [command[1], command[2]].join(' ') + '</i>');
+          } 
           break;
         }
 
@@ -89,8 +91,7 @@ conInput.addEventListener('keyup', e => {
           if (params) {
             let count = text
               .document[currentMission]
-              .match(new RegExp(params[0], 'g'));
-            console.log(count);
+              .match(new RegExp(params[0], 'gi'));
             loadText(count ? count.length : '0');
           } else {
             loadText('</br><span class="error">Invalid regex:</span> <i>' + command[1] + '</i>');
@@ -113,22 +114,23 @@ conInput.addEventListener('keyup', e => {
           if (hint) {
             score.hint += 1;
           } else {
-            hint = '\nNo hints available';
+            hint = 'No hints available';
           }
-          loadText('\n<span class="title">-- REQUESTNG HINT</span>\n' + hint);
+          hint += '\n\n\nEnter <i>functions</i> to learn more about the <i>count</i>, <i>find</i> and <i>replace</i> commands\nEnter <i>regex</i> to learn more about creating regex patterns';
+          loadText('\n<span class="title">-- REQUESTNG HINT</span>\n\n' + hint);
           break;
 
         //
         // Submit solution
         //
         case 'submit':
-          if (currentMission === 0 || checkSolution()) {
+          if (currentSubMission === text.mission[currentMission].length - 1) {
+            currentSubMission = 0;
+            currentMission += 1;
+            loadText(text.mission[currentMission][currentSubMission]);
+            loadText(text.document[currentMission], true);
+          } else if (checkSolution()) {
             currentSubMission += 1;
-            if (currentSubMission === text.mission[currentMission].length) {
-              currentSubMission = 0;
-              currentMission += 1;
-              loadText(text.document[currentMission], true);
-            }
             loadText(text.mission[currentMission][currentSubMission]);
           } else {
             let failText =
@@ -186,15 +188,15 @@ conInput.addEventListener('keyup', e => {
   //
   //  Text input listener to render regex matches on document
   //
-  else {
-    let regex = conInput.value.match(/\/([^\/]*)/);
-    if (regex && regex[1]) {
-      try {
-        docOutput.innerHTML =
-          docOutput.innerText
-          .replace(new RegExp(regex[1], 'g'), '<b>$&</b>'); 
-      } catch(e) {}
-    }
+  let regex = conInput.value.match(/\/([^\/]*)/);
+  if (regex && regex[1]) {
+    try {
+      docOutput.innerHTML =
+        docOutput.innerText
+        .replace(new RegExp(regex[1], 'gi'), '<b>$&</b>'); 
+    } catch(e) {}
+  } else {
+    docOutput.innerHTML = docOutput.innerText;
   }
 });
 
@@ -214,16 +216,15 @@ function parseCommand(str) {
 // Parse regex function arguments
 //
 function parseRegex(pattern) {
-  console.log(pattern);
   if (!pattern.match(/\/.*\//)) {
     return false;
   }
-  if (pattern.match(/\/.*\/ '/) && !str.match(/\/.*\/ '.*'/)) {
+  if (pattern.match(/\/.*\/ '/) && !pattern.match(/\/.*\/ '.*'/)) {
     return false;
   }
   try {
     let parts = pattern.match(/\/(.*)\/(?: '(.*)')?/);
-    // Test valid RegEx
+    // Test valid regex
     ''.replace(new RegExp(parts[1]), parts[2] || '');
     return [parts[1], parts[2]];
   } catch(e) {
@@ -236,13 +237,13 @@ function parseRegex(pattern) {
 //
 function checkSolution() {
   let
-    a = text.solution[currentMission][currentSubMission],
-    b = conOutput.innerText;
+    submit = conOutput.innerText.toString().replace(/[\n\s]/g, ''),
+    answer = text.solution[currentMission][currentSubMission];
 
-  a = a.toString().replace(/[\n\s]/g, '');
-  b = b.toString().replace(/[\n\s]/g, '');
+  console.log(submit);
+  console.log(answer);
 
-  return a === b;
+  return answer === submit || answer(submit);
 }
 
 //
@@ -274,7 +275,14 @@ function loadText(stream, isDoc = false) {
         target.clientHeight > (isDoc ? 550 :480) &&
         stream.length - pos > 0
       ) {
-        target.innerHTML += `\n[${stream.length - pos} more lines]`;
+        let linesLeft =
+          isDoc
+            ? stream.match(/\n/g).length - target.innerHTML.match(/\n/g).length
+            : stream.length - pos;
+        if (isDoc) {
+          target.innerHTML = target.innerHTML.substr(0, target.innerHTML.length - 1);
+        }
+        target.innerHTML += `\n[${linesLeft} more lines]`;
         end = true;
       }
       if (pos >= stream.length || end) {
@@ -285,7 +293,7 @@ function loadText(stream, isDoc = false) {
         }
       }
     },
-    isDoc ? 2 : 30
+    isDoc ? 0 : 30
   );
   isDoc ? docTextInterval = interval : conTextInterval = interval;
 }

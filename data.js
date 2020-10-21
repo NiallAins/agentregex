@@ -25,9 +25,9 @@ Commands:
       `
 <span class="title">-- MISSION</span>
   
-We have gained access to our enemies' communication network
+We have gained access to our enemy's communication network
 Using this connection, and your skills, we will attempt to gather intelligence and undertake sabotage operations
-To minimise the chance of detection by our enemies' bandwidth monitoring systems, try to submit your commands in their shortest possible form
+To minimise the chance of detection by our enemy's bandwidth monitoring systems, try to submit your commands in their shortest possible form
 
 The Commander wishes you luck
 
@@ -40,33 +40,79 @@ Enter <i>help</i> to return to the help page
       `
 <span class="title">-- MISSION operation brotherhood </span>
       
-We have intercepted a data dump containing the names of enemy operatives
-We believe several brothers of the infamous Brunner family are currently working as agents
+We have intercepted a data dump containing the names and IDs of enemy operatives
+We believe several brothers of the infamous Baumann family are currently working as agents
 
-Find out how many of these brothers are included in the data
+Count how many of these brothers are included in the data
+
 
 Enter <i>submit</i> once you have the correct information in the command output
-Enter <i>hint</i> to request assistance `,
+Enter <i>hint</i> to request assistance`,
       `
-Mission successful!`
+<span class="title">-- MISSION operation brotherhood </span>
+
+Success
+
+We have now found that some members of the Baumann family spell their name <span class="nobreak">with only a single 'n'</span>
+Accounting for this, re-count the number of brothers in the data
+
+
+Enter <i>submit</i> once you have the correct information in the command output`,
+      `
+<span class="title">-- MISSION operation brotherhood </span>
+
+Success
+
+Our intel has found that lower ID numbers are assigned to the most important agents
+Find the ID numbers of any agent ranking in the top 100 most important
+
+
+Enter <i>submit</i> once you have the correct information in the command output
+Enter <i>hint</i> to request assistance`,
+      `
+<span class="title">-- MISSION operation brotherhood </span>
+
+Success
+
+Harry Baumann seems to be the highest ranked of the brothers in our data... and so the worst of our enemies!
+Replace his ID number with a number above 10,000 to demote him and sabotage his privileges
+
+
+Enter <i>submit</i> once you have the edited document in the command output
+Enter <i>hint</i> to request assistance`,
+      `
+<span class="title">-- MISSION operation brotherhood </span>
+
+Mission Successful!
+
+You have exposed the Baumann brothers' data and sabotaged Harry Baumann's rank; as a result his medical license will be revoked and his pediatrics research work destroyed
+
+The Commander commends your success!
+
+
+Enter <i>submit</i> once you are ready to receive your next mission
+`
+
+    ],
+    [
+      'End of missions'
     ]
   ],
   hint: [
+    [],
     [
-      '',
-    ],
-    [
-      `
-Use the command <i>count</i> followed by a regex which matches the name 'Brunner'
-
-Enter <i>functions</i> to learn more about the <i>count</i> command
-Enter <i>regex</i> to learn more about creating regex patterns`
+      "Use the command <i>count</i> followed by a regex which matches the name 'Baumann'",
+      "Use the command <i>count</i> followed by a regex which matches both the name 'Baumann' and the name 'Bauman'",
+      'Use the command <i>find</i> followed by a regex which matches any one or two digit number within quote marks'
     ]
   ],
   solution: [
-    [''],
+    [],
     [
-      '5'
+      '4',
+      '6',
+      a => a === '"10""7""3""6""14""16""7""12""14""85"' || a === '1073614167121485',
+      a => !!a.match(/DrBaumann,Harry"[0-9]{5,}"/)
     ]
   ],
   fail: {
@@ -76,7 +122,7 @@ Enter <i>regex</i> to learn more about creating regex patterns`
 You have submitted an incorrect output`,
     footer: `
 
-Enter <i>submit</i> again once you have generated the correct output
+Enter <i>submit</i> again once you have the correct information in the console output
 
 Enter <i>hint</i> to request assistance 
 Enter <i>skip</i> to give up on this mission goal`,
@@ -93,135 +139,107 @@ Enter <i>skip</i> to give up on this mission goal`,
   document: [
     ``,
     `
-[{
-    id: 38423,
-    lastName: "Wright",
-    firstName: "Sergey"
-},{
-    id: 40834,
-    lastName: "Evans",
-    firstName: "Monika M"
-},{
-    id: 99719,
-    lastName: "Evans",
-    firstName: "Daniel"
-},{
-    id: 85617,
-    lastName: "Brunner",
-    firstName: "Dima Andrew"
-},{
-    id: 07394,
-    lastName: "Roberts",
-    firstName: "Alina Ola"
-},{
-    id: 85422,
-    lastName: "Owen",
-    firstName: "Daniel"
-},{
-    id: 77527,
-    lastName: "Evans",
-    firstName: "Tanya"
-},{
-    id: 66426,
-    lastName: "Jenkins",
-    firstName: "Aleksandra"
-},{
-    id: 33236,
-    lastName: "Brunner",
-    firstName: "Kasia Ivan"
-},{
-    id: 74174,
-    lastName: "Jones",
-    firstName: "Kasia"
-},{
-    id: 95317,
-    lastName: "Clarke",
-    firstName: "Tanya"
-},{
-    id: 79798,
-    lastName: "Williams",
-    firstName: "Kate Tanya"
-},{
-    id: 67010,
-    lastName: "Griffiths",
-    firstName: "Michael"
-},{
-    id: 13859,
-    lastName: "Hall",
-    firstName: "Michael"
-},{
-    id: 84022,
-    lastName: "Lewis",
-    firstName: "Irina S"
-},{
-    id: 29988,
-    lastName: "Hughes",
-    firstName: "Irina"
-},{
-    id: 39128,
-    lastName: "Jones",
-    firstName: "Alexander"
-},{
-    id: 54074,
-    lastName: "Evans",
-    firstName: "Dasha"
-},{
-    id: 73938,
-    lastName: "Moss",
-    firstName: "Karolina"
-},{
-    id: 55308,
-    lastName: "Lewis",
-    firstName: "Alexandra"
-},{
-    id: 52321,
-    lastName: "Fischer",
-    firstName: "Alexandra"
-},{
-    id: 56658,
-    lastName: "Taylor",
-    firstName: "Tanya"
-},{
-    id: 87983,
-    lastName: "Hall",
-    firstName: "Maria"
-},{
-    id: 77385,
-    lastName: "Williams",
-    firstName: "Mary"
-},{
-    id: 92245,
-    lastName: "Brunner",
-    firstName: "Karolina David"
-},{
-    id: 19581,
-    lastName: "Hughes",
-    firstName: "Igor"
-},{
-    id: 68086,
-    lastName: "Dris",
-    firstName: "John"
-},{
-    id: 91485,
-    lastName: "Evans",
-    firstName: "Nikita George"
-},{
-    id: 35642,
-    lastName: "Meyer",
-    firstName: "Dasha"
-},{
-    id: 99186,
-    lastName: "Brunner",
-    firstName: "Monika"
-},{
-    id: 30346,
-    lastName: "Brunner",
-    firstName: "Ola"
-},{
-    id: 90336,
-    lastName: "Thompson",
-    firstName: "Nastya"
-}]`
+Meyer, Mateusz "0879"
+Moss, Alexander "32117"
+White, Andrey Irina "3079"
+Moss, Mary J "10"
+Taylor, Marina B "78680"
+Steiner, Liza "87184"
+Baumann, Artem David "311"
+White, Katya "47861"
+Gerber, Alex Olga "94386"
+Huber, Pavel "913"
+Walker, Anna "36006"
+Evans, Diana "7"
+Evans, Pavel "95982"
+Moss, Daniel "74465"
+Evans, Alex J "5666"
+Dris, Liza Anastasia "16787"
+Davies, Alex "43436"
+Dr Baumann, Harry "68200"
+White, David M "7727"
+Thomas, John "60596"
+Smith, Natalia "3945"
+Williams, Aleksandra Kate "692"
+Evans, Michael "42762"
+Meier, Michael "96093"
+Bauman, Sasha "90218"
+Morgan, Andrey "51471"
+Smith, Jakub "02458"
+White, Mary "8123"
+Davies, Jakub Martin "15452"
+Gerber, Monika "8479"
+Evans, Kasia Michael "3"
+Owen, Kate Alexander "95443"
+Fischer, Olga I "79154"
+Hughes, Karolina "13801"
+Weber, Pavel "08138"
+Meyer, Kasia S "57379"
+Meier, Ivan "7598"
+Smith, John "82174"
+Evans, Katya "32957"
+Jenkins, Dmitry "62990"
+Morgan, Diana Jakub "28479"
+Green, Ivan "55357"
+Schneider, Dima Olga "49451"
+Frei, Liza "6"
+Jackson, Dima Katya "68007"
+Evans, Szymon Veronika "91207"
+Williams, Sergey "79708"
+White, Dima "01581"
+Jackson, Andrew "18070"
+James, Michael "14"
+Brown, Ola "17715"
+Dris, Daria Peter "01964"
+Phillips, George Marina "64481"
+Williams, Peter Peter "19615"
+Wright, Dominika Liza "37905"
+Owen, David Vlad "15533"
+Evans, Veronika "76310"
+James, Sergey "99399"
+Baumann, Anton "80884"
+Williams, Nikita "16"
+Phillips, George "18886"
+Hall, Martin "01577"
+Evans, Alexandra "94711"
+James, Maria Ola "44887"
+Meyer, Ola "28068"
+Smith, Harry "7"
+Steiner, Vlad A "06698"
+Brown, Andrey "02785"
+Frei, David "53331"
+Jones, Paulina "68314"
+Brown, Aleksandra Alexandra "49125"
+Evans, Daria "93539"
+Wilson, Karolina Tanya "99530"
+Evans, Mateusz "61456"
+Jones, Monika "12"
+Walker, Dmitry "19557"
+Owen, Jakub "90672"
+Roberts, Andrew Anastasia "31061"
+Baumann, Peter Olga "71239"
+Meyer, George A "62020"
+Williams, Peter "95804"
+Schmid, David "14"
+Jones, Maria "16926"
+Phillips, Karolina "52420"
+Bauman, Kasia "76335"
+Price, Diana Anton "88328"
+Phillips, Julia "48311"
+Meyer, Dasha "49737"
+James, Victoria "45299"
+Morgan, Olga "85"
+Rees, Daria "35231"
+Hall, Vlad "42288"
+Evans, Julia "95001"
+Jackson, Tanya Peter "13491"
+Schmid, Mary "24194"
+Keller, Paulina E "67528"
+Williams, Nick "11425"
+Moser, Daniel "74864"
+Moser, Natalia "91713"
+Wood, Vlad "009905"`,
+    ''
   ],
   regex: {
     default: `
@@ -257,7 +275,7 @@ More options for <i>regex</i> command:
 -- REGEX wildcard
 
 .
-  matches any character
+  matches any character (except for a line break)
   ex. <i>/ab./</i> matches 'abc', 'ab9', 'ab?', 'ab ', etc.
 
 
@@ -285,7 +303,6 @@ More options for <i>regex</i> command:
       <i>/ab{2,4}/</i>   matches 'abb', 'abbb' and 'abbbb'
       <i>/ab{2,}/</i>    matches 'a' followed by 'b' 2 or more times
 
-
 More options for <i>regex</i> command:<span class="i-list">
   <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>group</i>      <i>range</i></span>
   <span class="i-list"><i>whitespace</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
@@ -294,13 +311,14 @@ More options for <i>regex</i> command:<span class="i-list">
 
 []
   matches any character inside
-  ex. <i>/a[bc?-]/</i> matches 'ab', 'ac', 'a?' and 'a-'
+  ex. <i>/a[bc? -]/</i> matches 'ab', 'ac', 'a?', 'a ' and 'a-'
 
 [-]
   matches any character within a range
+  can include multiple ranges and single characters
   ex.
     <i>/a[a-c]/</i> matches 'aa', 'ab' and 'ac'
-    <i>/a[A-B0-9]/</i> matches 'aA', 'aB', 'a0', etc.
+    <i>/a[0-9a-d!]/</i> matches 'a7', 'ab', 'a!', etc.
 
 [^]
   matches any character not inside
@@ -347,7 +365,7 @@ More options for <i>regex</i> command:<span class="i-list">
   matches any non-whitespace character
 
 \\n
-  matches a new line break
+  matches a line break
 
 \\t
   matches a tab character
@@ -401,17 +419,14 @@ The following commands can be used to manipulate a document:
 
 <i>find</i>
   Outputs all matches a given regex finds in a document
-  A replace pattern can also be given in single-quotes, to specify which groups within
-  a match to output
+  A replace pattern can also be given in single-quotes, to specify which groups within\n  a match to output
   ex. <i>find /abc|d/</i> outputs all instances of 'abc' and 'abd' found
       <i>find /ab(c|d)/ '$1'</i> outputs only the 'c|d' part of each match
 
 <i>replace</i>
-  Replaces text found in a document by a given regex with new text given in
-  single-quotes, then outputs the document
+  Replaces text found in a document by a given regex with new text given in\n  single-quotes, then outputs the document
   The replacement text can also include a replace pattern
   ex. <i>replace /[0-9]/ '0'</i> outputs a document with all numbers replaced with zeros
-      <i>replace /([0-9])([0-9])/ '$2'</i> outputs a document where all two digit numbers
-      have had their first digit removed`
+      <i>replace /([0-9])([0-9])/ '$2'</i> outputs a document where all two digit numbers\n      have had their first digit removed`
   }
 };

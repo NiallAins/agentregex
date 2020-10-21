@@ -66,6 +66,10 @@ main {
     color: $c_text_r;
     font-weight: 400;
   }
+
+  .nobreak {
+    white-space: nowrap;
+  }
   
   i {
     padding: 0 0.2rem;

@@ -87,6 +87,10 @@ main .error {
   font-weight: 400;
 }
 
+main .nobreak {
+  white-space: nowrap;
+}
+
 main i {
   padding: 0 0.2rem;
   border-radius: 0.2em;

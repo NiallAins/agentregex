@@ -4,3 +4,23 @@ Sinead
  - straight to mission
  - Didnt go into regex details
  - didnt look at functions
+
+Bean
+ - didnt know how to format count command
+ - capital letter
+ - read a lot of regex, didnt read functions
+ - spelling mistakes
+
+
+brothers
+ - count static
+ - count with or
+ - find full names of each sibling
+ - find id with 5 numbers starting with 8
+
+ find /[a-z]/
+
+Frank Brunner 087345
+/brunner [0-9]{}/
+
+
