@@ -61,11 +61,27 @@ body {
   background: #222;
 }
 
-main, input {
+main,
+input {
   font-family: 'Roboto Mono', monospace;
   color: #eee;
   font-weight: 300;
   font-size: 15px;
+}
+
+main #conContain,
+main #docContain,
+main #conLoader,
+main #docLoader,
+main b,
+main i,
+input #conContain,
+input #docContain,
+input #conLoader,
+input #docLoader,
+input b,
+input i {
+  line-height: 20px;
 }
 
 main {
@@ -109,9 +125,14 @@ main .i-list i {
   font-size: 1em;
 }
 
-main b {
+main #docContain b {
   font-weight: 400;
   color: #11d272;
+}
+
+main #conContain b {
+  font-weight: 400;
+  color: #eee;
 }
 
 .frame {
@@ -159,7 +180,6 @@ main b {
 
 #conContain #conOutput {
   color: #11d272;
-  max-height: calc(100% - 54px);
   overflow: hidden;
 }
 
@@ -176,6 +196,7 @@ main b {
   position: absolute;
   bottom: 8px;
   left: 8px;
+  z-index: 20;
   width: calc(100% - 16px);
   height: 32px;
   background: #222;
@@ -203,5 +224,23 @@ main b {
   color: #aaa;
   font-family: 'courier new';
   font-weight: bold;
+}
+
+.textLoader {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  z-index: 10;
+  padding: 0 16px;
+  background: #222;
+}
+
+#conContain .textLoader {
+  padding-bottom: 64px;
+}
+
+#docContain .textLoader {
+  padding-bottom: 24px;
 }
 /*# sourceMappingURL=style.css.map */

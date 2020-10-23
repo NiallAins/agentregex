@@ -4,7 +4,9 @@
 const
   docOutput = document.getElementById('docOutput'),
   conInput = document.getElementById('conInput'),
-  conOutput = document.getElementById('conOutput');
+  conOutput = document.getElementById('conOutput'),
+  conLoader = document.getElementById('conLoader'),
+  docLoader = document.getElementById('docLoader');
 
 //
 // Game state
@@ -42,7 +44,9 @@ conInput.addEventListener('keyup', e => {
         //
         case 'find': {
           let params = parseRegex(command[1]);
-          if (params) {
+          if (params.error) {
+            loadText('\n<span class="error">Invalid ' + params.error + ':</span> <i>' + [command[1], command[2]].join(' ') + '</i>');
+          } else {
             let matches = text
               .document[currentMission]
               .match(new RegExp(params[0], 'gi'))
@@ -50,7 +54,7 @@ conInput.addEventListener('keyup', e => {
               loadText(
                 matches.map(m =>
                   m.replace(
-                    new RegExp(params[0]),
+                    new RegExp(params[0], 'i'),
                     params[1] || '$&'
                   )
                 )
@@ -59,9 +63,7 @@ conInput.addEventListener('keyup', e => {
             } else {
               loadText('\n[No matches found]');
             }
-          } else {
-            loadText('</br><span class="error">Invalid regex:</span> <i>' + [command[1], command[2]].join(' ') + '</i>');
-          } 
+          }
           break;
         }
 
@@ -70,15 +72,25 @@ conInput.addEventListener('keyup', e => {
         //
         case 'replace': {
           let params = parseRegex(command[1]);
-          if (params) {
+          if (params.error || params[1] === '') {
             loadText(
-              text.document[currentMission].replace(
-                new RegExp(params[0], 'gi'),
-                params[1]
+              '\n<span class="error"> Invalid ' +
+              (
+                params.error
+                  ? params.error + ':</span> <i>' + [command[1], command[2]].join(' ') + '</i>'
+                  : 'command: missing replace pattern</span>'
               )
-            );
+            )
           } else {
-            loadText('</br><span class="error">Invalid regex:</span> <i>' + [command[1], command[2]].join(' ') + '</i>');
+            let
+              regex = new RegExp(params[0], 'gi');
+              replaces = text.document[currentMission].match(regex);
+            replaces = replaces ? replaces.length : 0;
+            loadText(
+              text.document[currentMission].replace(regex, '<b>' + params[1] + '</b>'),
+              false,
+              '\n[' + replaces + ' edits made]'
+            )
           } 
           break;
         }
@@ -217,18 +229,18 @@ function parseCommand(str) {
 //
 function parseRegex(pattern) {
   if (!pattern.match(/\/.*\//)) {
-    return false;
+    return { error: 'regex'};
   }
-  if (pattern.match(/\/.*\/ '/) && !pattern.match(/\/.*\/ '.*'/)) {
-    return false;
+  if (pattern.match(/\/.*\/\s?[^\s]+/) && !pattern.match(/\/.*\/\s+'.*'/)) {
+    return { error: 'replace pattern'}
   }
   try {
     let parts = pattern.match(/\/(.*)\/(?: '(.*)')?/);
     // Test valid regex
     ''.replace(new RegExp(parts[1]), parts[2] || '');
-    return [parts[1], parts[2]];
+    return [parts[1], parts[2] || ''];
   } catch(e) {
-    return false;
+    return { error: 'regex' } 
   }
 }
 
@@ -240,9 +252,6 @@ function checkSolution() {
     submit = conOutput.innerText.toString().replace(/[\n\s]/g, ''),
     answer = text.solution[currentMission][currentSubMission];
 
-  console.log(submit);
-  console.log(answer);
-
   return answer === submit || answer(submit);
 }
 
@@ -252,27 +261,58 @@ function checkSolution() {
 let
   conTextInterval,
   docTextInterval;
-function loadText(stream, isDoc = false) {
+function loadText(text, isDoc = false, appendText = '') {
   let
-    pos = 0,
-    target = isDoc ? docOutput : conOutput,
-    interval = isDoc ? docTextInterval : conTextInterval,
-    end = false;
+    maxHeight = isDoc ? 540 : 540,
+    output = isDoc ? docOutput : conOutput,
+    loader = isDoc ? docLoader : conLoader,
+    contain = isDoc ? docContain : conContain,
+    interval = isDoc ? docTextInterval : conTextInterval;
 
-  stream = isDoc ? stream.toString() : stream.toString().split('\n')
   clearInterval(interval);
-  target.innerHTML = '';
+  output.innerHTML = text;
+  loader.innerHTML = '';
+  loader.style.paddingTop = maxHeight;
+  
+  setTimeout(() => {
+    let
+      target = Math.max(20, maxHeight - output.clientHeight);
+      current = maxHeight;
 
-  if (assets.textClick.paused) {
-    assets.textClick.play();
-  }
+    if (assets.textClick.paused) {
+      assets.textClick.play();
+    }
+
+    interval = setInterval(() => {
+      current -= 20;
+      loader.style.paddingTop = current + 'px';
+      if (current <= target) {
+        clearInterval(interval);
+        isDoc ? docTextInterval = 0 : conTextInterval = 0;
+        if (!docTextInterval && !docTextInterval) {
+          assets.textClick.pause();
+        }
+        let overflow = (output.clientHeight - contain.clientHeight) + (isDoc ? 85 : 130);
+        if (overflow > 0) {
+          loader.innerHTML = '[' + Math.ceil(overflow / 20) +  ' more lines]';
+        }
+      }
+    }, 30);
+    isDoc ? docTextInterval = interval : conTextInterval = interval;
+  }, 30);
+}
+
+function loadText1(stream, isDoc = false, appendText = '') {
+
+
+
 
   interval = setInterval(
     () => {
       target.innerHTML += stream[pos] + (isDoc ? '' : '\n');
       pos += 1;
       if (
-        target.clientHeight > (isDoc ? 550 :480) &&
+        target.clientHeight > maxHeight &&
         stream.length - pos > 0
       ) {
         let linesLeft =
@@ -282,6 +322,7 @@ function loadText(stream, isDoc = false) {
         if (isDoc) {
           target.innerHTML = target.innerHTML.substr(0, target.innerHTML.length - 1);
         }
+        target.innerHTML += appendText;
         target.innerHTML += `\n[${linesLeft} more lines]`;
         end = true;
       }

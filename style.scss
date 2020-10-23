@@ -42,11 +42,21 @@ body {
   background: $c_bg;
 }
 
-main, input {
+main,
+input {
   font-family: 'Roboto Mono', monospace;
   color: $c_text_l;
   font-weight: 300;
   font-size: 15px;
+
+  #conContain,
+  #docContain,
+  #conLoader,
+  #docLoader,
+  b,
+  i {
+    line-height: 20px;
+  }
 }
 
 main {
@@ -89,9 +99,13 @@ main {
     }
   }
   
-  b {
+  #docContain b {
     font-weight: 400;
     color: $c_text_g;
+  }
+  #conContain b {
+    font-weight: 400;
+    color: $c_text_l;
   }
 }
 
@@ -138,7 +152,6 @@ main {
   
   #conOutput {
     color: $c_text_g;
-    max-height: calc(100% - 54px);
     overflow: hidden;
   }
   
@@ -155,6 +168,7 @@ main {
     position: absolute;
     bottom: 8px;
     left: 8px;
+    z-index: 20;
     width: calc(100% - 16px);
     height: 32px;
     background: $c_bg;
@@ -184,3 +198,20 @@ main {
   }
 }
 
+.textLoader {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  z-index: 10;
+  padding: 0 16px;
+  background: $c_bg;
+
+  #conContain & {
+    padding-bottom: 64px;
+  }
+
+  #docContain & {
+    padding-bottom: 24px;
+  }
+}

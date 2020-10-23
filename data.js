@@ -46,7 +46,7 @@ We believe several brothers of the infamous Baumann family are currently working
 Count how many of these brothers are included in the data
 
 
-Enter <i>submit</i> once you have the correct information in the command output
+Enter <i>submit</i> once you have the correct information in the console output
 Enter <i>hint</i> to request assistance`,
       `
 <span class="title">-- MISSION operation brotherhood </span>
@@ -57,7 +57,7 @@ We have now found that some members of the Baumann family spell their name <span
 Accounting for this, re-count the number of brothers in the data
 
 
-Enter <i>submit</i> once you have the correct information in the command output`,
+Enter <i>submit</i> once you have the correct information in the console output`,
       `
 <span class="title">-- MISSION operation brotherhood </span>
 
@@ -67,7 +67,7 @@ Our intel has found that lower ID numbers are assigned to the most important age
 Find the ID numbers of any agent ranking in the top 100 most important
 
 
-Enter <i>submit</i> once you have the correct information in the command output
+Enter <i>submit</i> once you have the correct information in the console output
 Enter <i>hint</i> to request assistance`,
       `
 <span class="title">-- MISSION operation brotherhood </span>
@@ -75,10 +75,10 @@ Enter <i>hint</i> to request assistance`,
 Success
 
 Harry Baumann seems to be the highest ranked of the brothers in our data... and so the worst of our enemies!
-Replace his ID number with a number above 10,000 to demote him and sabotage his privileges
+Replace his ID number with a number above 10,000 to demote him and sabotage his credentials
 
 
-Enter <i>submit</i> once you have the edited document in the command output
+Enter <i>submit</i> once you have the edited document in the console output
 Enter <i>hint</i> to request assistance`,
       `
 <span class="title">-- MISSION operation brotherhood </span>
@@ -87,7 +87,7 @@ Mission Successful!
 
 You have exposed the Baumann brothers' data and sabotaged Harry Baumann's rank; as a result his medical license will be revoked and his pediatrics research work destroyed
 
-The Commander commends your success!
+The High  Commander commends your success!
 
 
 Enter <i>submit</i> once you are ready to receive your next mission
