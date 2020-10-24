@@ -12,10 +12,12 @@ const
 // Game state
 //
 let
-  currentMission = 0,
-  currentSubMission = 0,
+  missionNum = 0,
+  goalNum = 0,
+  currentMission = content.mission[missionNum],
   history = [],
   historyPlace = -1,
+  hintRequested = false,
   score = {
     hints: 0,
     fails: 0,
@@ -38,6 +40,12 @@ conInput.addEventListener('keyup', e => {
     try {
       let command = parseCommand(conInput.value);
       switch (command[0]) {
+        //
+        // Get mission details
+        //
+        case 'mission':
+          loadText(currentMission.title + currentMission.goal[goalNum]);
+          break;
 
         //
         // Find command
@@ -47,18 +55,20 @@ conInput.addEventListener('keyup', e => {
           if (params.error) {
             loadText('\n<span class="error">Invalid ' + params.error + ':</span> <i>' + [command[1], command[2]].join(' ') + '</i>');
           } else {
-            let matches = text
-              .document[currentMission]
+            let matches = currentMission.document
               .match(new RegExp(params[0], 'gi'))
             if (matches) {
               loadText(
+                '\n' +
                 matches.map(m =>
                   m.replace(
                     new RegExp(params[0], 'i'),
                     params[1] || '$&'
                   )
                 )
-                .join('\n')
+                .join('\n'),
+                false,
+                '\nEnter <i>submit</i> to submit this output'
               )
             } else {
               loadText('\n[No matches found]');
@@ -72,24 +82,27 @@ conInput.addEventListener('keyup', e => {
         //
         case 'replace': {
           let params = parseRegex(command[1]);
-          if (params.error || params[1] === '') {
+          console.log(params);
+          if (params.error || params[1] === false) {
             loadText(
               '\n<span class="error"> Invalid ' +
               (
                 params.error
                   ? params.error + ':</span> <i>' + [command[1], command[2]].join(' ') + '</i>'
-                  : 'command: missing replace pattern</span>'
+                  : 'command: missing replacement text</span>'
               )
             )
           } else {
             let
-              regex = new RegExp(params[0], 'gi');
-              replaces = text.document[currentMission].match(regex);
-            replaces = replaces ? replaces.length : 0;
+              regex = new RegExp(params[0], 'gi'),
+              replaces = currentMission.document.match(regex)?.length || 0;
             loadText(
-              text.document[currentMission].replace(regex, '<b>' + params[1] + '</b>'),
+              currentMission.document.replace(
+                regex,
+                `<b${params[1] === '' ? ' class="empty"' : ''}>${params[1] || ' '}</b>`
+              ),
               false,
-              '\n[' + replaces + ' edits made]'
+              `\n${replaces} edit${replaces === 1 ? '' : 's'} made, enter <i>submit</i> to submit this document`
             )
           } 
           break;
@@ -101,55 +114,97 @@ conInput.addEventListener('keyup', e => {
         case 'count': {
           let params = parseRegex(command[1]);
           if (params) {
-            let count = text
-              .document[currentMission]
-              .match(new RegExp(params[0], 'gi'));
-            loadText(count ? count.length : '0');
+            loadText(
+              '\n' + (
+                currentMission.document.match(new RegExp(params[0], 'gi'))?.length
+                || 0
+              ),
+              false,
+              '\nEnter <i>submit</i> to submit this output'
+            );
           } else {
             loadText('</br><span class="error">Invalid regex:</span> <i>' + command[1] + '</i>');
           }
           break;
         }
-        
-        //
-        // Get mission details
-        //
-        case 'mission':
-          loadText(text.mission[currentMission][currentSubMission]);
-          break;
-
-        //
-        // Display mission hint
-        //
-        case 'hint':
-          let hint = text.hint[currentMission][currentSubMission];
-          if (hint) {
-            score.hint += 1;
-          } else {
-            hint = 'No hints available';
-          }
-          hint += '\n\n\nEnter <i>functions</i> to learn more about the <i>count</i>, <i>find</i> and <i>replace</i> commands\nEnter <i>regex</i> to learn more about creating regex patterns';
-          loadText('\n<span class="title">-- REQUESTNG HINT</span>\n\n' + hint);
-          break;
 
         //
         // Submit solution
         //
         case 'submit':
-          if (currentSubMission === text.mission[currentMission].length - 1) {
-            currentSubMission = 0;
-            currentMission += 1;
-            loadText(text.mission[currentMission][currentSubMission]);
-            loadText(text.document[currentMission], true);
+          if (goalNum === currentMission.goal.length - 1) {
+            hintRequested = false;
+            goalNum = 0;
+            missionNum += 1;
+            currentMission = content.mission[missionNum];
+            loadText(currentMission.title + currentMission.goal[goalNum]);
+            loadText(currentMission.document, true);
           } else if (checkSolution()) {
-            currentSubMission += 1;
-            loadText(text.mission[currentMission][currentSubMission]);
+            hintRequested = false;
+            goalNum += 1;
+            loadText(
+              currentMission.title +
+              (goalNum === currentMission.goal.length - 1 ? '\nMission Success\n' : '\nSuccess\n') +
+              currentMission.goal[goalNum]
+            );
           } else {
+            score.fail += 1;
             let failText =
-              text.fail.header +
-              text.fail.message[Math.floor(Math.random() * text.fail.message.length)] +
-              text.fail.footer;
+              currentMission.title +
+              '\n<span class="error">Attempt Failed</span>\n' +
+              content.fail[Math.floor(Math.random() * content.fail.length)] +
+              '\n\n\nEnter <i>submit</i> again once you have the correct information in the console output' +
+              '\n\nEnter <i>hint</i> to request assistance\nEnter <i>skip</i> to give up on this mission goal'
             loadText(failText);
+          }
+          break;
+
+
+        //
+        // Display mission hint
+        //
+        case 'hint':
+          let hint = currentMission.hint[goalNum];
+          if (hint) {
+            if (!hintRequested) {
+              score.hint += 1;
+              hintRequested = true;
+            }
+          } else {
+            hint = 'No hints available';
+          }
+          loadText(
+            '\n<span class="title">-- REQUESTNG HINT</span>\n\n' +
+            hint +
+            '\n\n\nEnter <i>functions</i> to learn more about the <i>count</i>, <i>find</i> and <i>replace</i> commands' +
+            '\nEnter <i>regex</i> to learn more about creating regex patterns'
+          );
+          break;
+
+        //
+        // Skip mission goal
+        //
+        case 'skip':
+          if (goalNum === currentMission.goal.length - 1) {
+            hintRequested = false;
+            goalNum = 0;
+            missionNum += 1;
+            loadText(
+              currentMission.title +
+              '\n<span class="error">Mission Goal Failed</span>\n' +
+              currentMission.goal[goalNum]
+            );
+            loadText(currentMission.title + currentMission.goal[goalNum]);
+            loadText(currentMission.document, true);
+          } else {
+            hintRequested = false;
+            score.fails += 1;
+            goalNum += 1;
+            loadText(
+              currentMission.title +
+              '\n<span class="error">Mission Goal Failed</span>\n' +
+              currentMission.goal[goalNum]
+            );
           }
           break;
 
@@ -157,11 +212,11 @@ conInput.addEventListener('keyup', e => {
         // Functions, Help & Regex commands
         //
         default:
-          if (!text[command[0]]) {
+          if (!content[command[0]]) {
             loadText('</br><span class="error">Invalid command:</span> <i>' + command.join(' ') + '</i>');
           } else {
             loadText(
-              text[command[0]][command[1] || 'default'] ||
+              content[command[0]][command[1] || 'default'] ||
               '<br /><span class="error">Invalid command option:</span> <i>' + command[1] + '</i>'
             );
           }
@@ -238,7 +293,7 @@ function parseRegex(pattern) {
     let parts = pattern.match(/\/(.*)\/(?: '(.*)')?/);
     // Test valid regex
     ''.replace(new RegExp(parts[1]), parts[2] || '');
-    return [parts[1], parts[2] || ''];
+    return [parts[1], parts[2] || parts[2] === '' ? parts[2] : false];
   } catch(e) {
     return { error: 'regex' } 
   }
@@ -250,9 +305,9 @@ function parseRegex(pattern) {
 function checkSolution() {
   let
     submit = conOutput.innerText.toString().replace(/[\n\s]/g, ''),
-    answer = text.solution[currentMission][currentSubMission];
+    answer = currentMission.solution[goalNum];
 
-  return answer === submit || answer(submit);
+  return typeof answer === 'string' ? answer  === submit : answer(submit);
 }
 
 //
@@ -263,7 +318,7 @@ let
   docTextInterval;
 function loadText(text, isDoc = false, appendText = '') {
   let
-    maxHeight = isDoc ? 540 : 540,
+    maxHeight = isDoc ? 560 : 520,
     output = isDoc ? docOutput : conOutput,
     loader = isDoc ? docLoader : conLoader,
     contain = isDoc ? docContain : conContain,
@@ -272,11 +327,12 @@ function loadText(text, isDoc = false, appendText = '') {
   clearInterval(interval);
   output.innerHTML = text;
   loader.innerHTML = '';
-  loader.style.paddingTop = maxHeight;
+  loader.style.height = maxHeight;
   
   setTimeout(() => {
     let
-      target = Math.max(20, maxHeight - output.clientHeight);
+      appendLines = appendText.match(/\n/g)?.length || 0,
+      target = Math.max(20 + (appendLines * 20), maxHeight - output.clientHeight),
       current = maxHeight;
 
     if (assets.textClick.paused) {
@@ -284,59 +340,30 @@ function loadText(text, isDoc = false, appendText = '') {
     }
 
     interval = setInterval(() => {
+      loader.style.height = current + 'px';
       current -= 20;
-      loader.style.paddingTop = current + 'px';
-      if (current <= target) {
+      if (current < target) {
         clearInterval(interval);
         isDoc ? docTextInterval = 0 : conTextInterval = 0;
         if (!docTextInterval && !docTextInterval) {
           assets.textClick.pause();
         }
-        let overflow = (output.clientHeight - contain.clientHeight) + (isDoc ? 85 : 130);
+        let overflow = Math.ceil(
+          (
+            (output.clientHeight - contain.clientHeight) +
+            (isDoc ? 105 : 150)
+          ) / 20
+        );
         if (overflow > 0) {
-          loader.innerHTML = '[' + Math.ceil(overflow / 20) +  ' more lines]';
+          loader.innerHTML = `[${overflow + appendLines} more line${overflow + appendLines === 1 ? '' : 's'}]`;
+          loader.innerHTML += appendText.replace(/^\n/g, '\n[').replace(/$/, ']');
+        } else {
+          loader.innerHTML += appendText;
         }
       }
     }, 30);
     isDoc ? docTextInterval = interval : conTextInterval = interval;
   }, 30);
-}
-
-function loadText1(stream, isDoc = false, appendText = '') {
-
-
-
-
-  interval = setInterval(
-    () => {
-      target.innerHTML += stream[pos] + (isDoc ? '' : '\n');
-      pos += 1;
-      if (
-        target.clientHeight > maxHeight &&
-        stream.length - pos > 0
-      ) {
-        let linesLeft =
-          isDoc
-            ? stream.match(/\n/g).length - target.innerHTML.match(/\n/g).length
-            : stream.length - pos;
-        if (isDoc) {
-          target.innerHTML = target.innerHTML.substr(0, target.innerHTML.length - 1);
-        }
-        target.innerHTML += appendText;
-        target.innerHTML += `\n[${linesLeft} more lines]`;
-        end = true;
-      }
-      if (pos >= stream.length || end) {
-        clearInterval(interval);
-        isDoc ? docTextInterval = 0 : conTextInterval = 0;
-        if (!docTextInterval && !conTextInterval) {
-          assets.textClick.pause();
-        }
-      }
-    },
-    isDoc ? 0 : 30
-  );
-  isDoc ? docTextInterval = interval : conTextInterval = interval;
 }
 
 //
@@ -355,7 +382,7 @@ function init() {
   assets.textClick.loop = true;
   assets.textClick.oncanplaythrough = () => {
     assets.textClick.oncanplaythrough = () => {};
-    loadText(text.help.default);
+    loadText(content.help.default);
   }
   assets.textClick.load();
 }

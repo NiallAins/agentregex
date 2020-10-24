@@ -90,7 +90,7 @@ main {
   max-width: 1500px;
   height: 600px;
   margin: 16px auto;
-  margin-top: calc(50vh - 400px);
+  margin-top: calc(45vh - 300px);
 }
 
 main .title {
@@ -125,13 +125,26 @@ main .i-list i {
   font-size: 1em;
 }
 
-main #docContain b {
+main b {
   font-weight: 400;
+}
+
+main b.empty {
+  display: inline-block;
+  position: relative;
+  top: 4px;
+  width: 8px;
+  height: 14px;
+  border-radius: 0.2em;
+  margin: 0 1px;
+  background: #555;
+}
+
+main #docContain b {
   color: #11d272;
 }
 
 main #conContain b {
-  font-weight: 400;
   color: #eee;
 }
 
@@ -216,8 +229,8 @@ main #conContain b {
   content: '>';
   position: absolute;
   left: 26px;
-  bottom: 10px;
-  z-index: 10;
+  bottom: 13px;
+  z-index: 30;
   font-size: 1.5em;
   -webkit-animation: blink 2s infinite;
           animation: blink 2s infinite;
@@ -232,15 +245,17 @@ main #conContain b {
   right: 0;
   bottom: 0px;
   z-index: 10;
-  padding: 0 16px;
+  padding: 20px 16px;
   background: #222;
 }
 
 #conContain .textLoader {
   padding-bottom: 64px;
+  color: #11d272;
 }
 
 #docContain .textLoader {
-  padding-bottom: 24px;
+  padding-bottom: 28px;
+  color: #eee;
 }
 /*# sourceMappingURL=style.css.map */

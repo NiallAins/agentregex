@@ -1,11 +1,13 @@
 $c_bg: #222;
 $c_bg_l: #383838;
+$c_bg_ll: #555;
 $c_border: #555;
 $c_border_l: #bbb;
 $c_text_l: #eee;
 $c_text_d: #aaa;
 $c_text_g: #11d272;
 $c_text_r: #e23c3c;
+$line-height: 20px;
 
 @keyframes blink {
     0% { opacity: 1; }
@@ -22,7 +24,7 @@ $c_text_r: #e23c3c;
   width: 200px;
   height: 50px;
   border: 1px solid $c-text_r;
-  margin-top: 20px;
+  margin-top: $line-height;
   overflow: hidden;
   opacity: 0.5;
   color: $c_text_d;
@@ -55,7 +57,7 @@ input {
   #docLoader,
   b,
   i {
-    line-height: 20px;
+    line-height: $line-height;
   }
 }
 
@@ -65,7 +67,7 @@ main {
   max-width: 1500px;
   height: 600px;
   margin: 16px auto;
-  margin-top: calc(50vh - 400px);
+  margin-top: calc(45vh - 300px);
   
   .title {
     color: $c_text_l;
@@ -98,13 +100,26 @@ main {
       font-size: 1em;
     }
   }
+
+  b {
+    font-weight: 400;
+
+    &.empty {
+      display: inline-block;
+      position: relative;
+      top: 4px;
+      width: 8px;
+      height: 14px;
+      border-radius: 0.2em;
+      margin: 0 1px;
+      background: $c_bg_ll;
+    }
+  }
   
   #docContain b {
-    font-weight: 400;
     color: $c_text_g;
   }
   #conContain b {
-    font-weight: 400;
     color: $c_text_l;
   }
 }
@@ -188,8 +203,8 @@ main {
     content: '>';
     position: absolute;
     left: 26px;
-    bottom: 10px;
-    z-index: 10;
+    bottom: 13px;
+    z-index: 30;
     font-size: 1.5em;
     animation: blink 2s infinite;
     color: $c_text_d;
@@ -204,14 +219,16 @@ main {
   right: 0;
   bottom: 0px;
   z-index: 10;
-  padding: 0 16px;
+  padding: 20px 16px;
   background: $c_bg;
 
   #conContain & {
     padding-bottom: 64px;
+    color: $c_text_g;
   }
 
   #docContain & {
-    padding-bottom: 24px;
+    padding-bottom: 28px;
+    color: $c_text_l;
   }
 }

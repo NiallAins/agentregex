@@ -1,4 +1,4 @@
-const text = {
+const content = {
   help: {
     default: `
 <span class="title">-- HELP</span>
@@ -21,25 +21,26 @@ Commands:
     learn how to use the functional commands <i>find</i>, <i>count</i> and <i>replace</i>`
   },
   mission: [
-    [
-      `
-<span class="title">-- MISSION</span>
-  
+    {
+      title: '\n<span class="title">-- MISSION</span>\n',
+      goal: [`
 We have gained access to our enemy's communication network
 Using this connection, and your skills, we will attempt to gather intelligence and undertake sabotage operations
-To minimise the chance of detection by our enemy's bandwidth monitoring systems, try to submit your commands in their shortest possible form
-
+To minimise the chance of detection by our enemy's bandwidth monitoring, try to submit your commands in their shortest possible form
+    
 The Commander wishes you luck
-
+    
 
 Enter <i>submit</i> once you are ready to receive your first mission
-Enter <i>help</i> to return to the help page
-`,
-    ],
-    [
-      `
-<span class="title">-- MISSION operation brotherhood </span>
-      
+Enter <i>help</i> to return to the help page`
+      ],
+      hint: [],
+      document: '',
+    },
+    {
+      title: '\n<span class="title">-- MISSION operation brotherhood</span>\n',
+      goal: [
+        `
 We have intercepted a data dump containing the names and IDs of enemy operatives
 We believe several brothers of the infamous Baumann family are currently working as agents
 
@@ -48,97 +49,35 @@ Count how many of these brothers are included in the data
 
 Enter <i>submit</i> once you have the correct information in the console output
 Enter <i>hint</i> to request assistance`,
-      `
-<span class="title">-- MISSION operation brotherhood </span>
-
-Success
-
+        `
 We have now found that some members of the Baumann family spell their name <span class="nobreak">with only a single 'n'</span>
-Accounting for this, re-count the number of brothers in the data
-
-
-Enter <i>submit</i> once you have the correct information in the console output`,
-      `
-<span class="title">-- MISSION operation brotherhood </span>
-
-Success
-
+Accounting for this, re-count the number of brothers in the data`,
+        `
 Our intel has found that lower ID numbers are assigned to the most important agents
-Find the ID numbers of any agent ranking in the top 100 most important
-
-
-Enter <i>submit</i> once you have the correct information in the console output
-Enter <i>hint</i> to request assistance`,
-      `
-<span class="title">-- MISSION operation brotherhood </span>
-
-Success
-
+Find the ID numbers of any agent ranking in the top 100 most important`,
+        `
 Harry Baumann seems to be the highest ranked of the brothers in our data... and so the worst of our enemies!
-Replace his ID number with a number above 10,000 to demote him and sabotage his credentials
-
-
-Enter <i>submit</i> once you have the edited document in the console output
-Enter <i>hint</i> to request assistance`,
-      `
-<span class="title">-- MISSION operation brotherhood </span>
-
-Mission Successful!
-
+Replace his ID number with a number above 10,000 to demote him and sabotage his credentials`,
+        `
 You have exposed the Baumann brothers' data and sabotaged Harry Baumann's rank; as a result his medical license will be revoked and his pediatrics research work destroyed
 
-The High  Commander commends your success!
+The High Commander commends your success!
 
 
-Enter <i>submit</i> once you are ready to receive your next mission
-`
-
-    ],
-    [
-      'End of missions'
-    ]
-  ],
-  hint: [
-    [],
-    [
-      "Use the command <i>count</i> followed by a regex which matches the name 'Baumann'",
-      "Use the command <i>count</i> followed by a regex which matches both the name 'Baumann' and the name 'Bauman'",
-      'Use the command <i>find</i> followed by a regex which matches any one or two digit number within quote marks'
-    ]
-  ],
-  solution: [
-    [],
-    [
-      '4',
-      '6',
-      a => a === '"10""7""3""6""14""16""7""12""14""85"' || a === '1073614167121485',
-      a => !!a.match(/DrBaumann,Harry"[0-9]{5,}"/)
-    ]
-  ],
-  fail: {
-    header: `
-<span class="title">-- MISSION Failure </span>
-
-You have submitted an incorrect output`,
-    footer: `
-
-Enter <i>submit</i> again once you have the correct information in the console output
-
-Enter <i>hint</i> to request assistance 
-Enter <i>skip</i> to give up on this mission goal`,
-    message: [
-      '\nAs a result of your incompetence, our enemies have carpet bombed a small rural village',
-      '\nYou have brought shame on our unit in the eyes of The Commander',
-      '\nYour error has led to one our agents in the field being waterboarded',
-      '\nYou are a failure, just like your father!',
-      '\nA messenger has been dispatched to inform your mother of your incompetence',
-      '\nYou have been added to The Commander\'s list.. and not the good one',
-      '\nWhy has the lord brought you to me, why must I be punished!'
-    ]
-  },
-  document: [
-    ``,
-    `
+Enter <i>submit</i> once you are ready to receive your next mission`
+      ],
+      solution: [
+        '4',
+        '6',
+        a => a === '"10""7""3""6""14""16""7""12""14""85"' || a === '1073614167121485',
+        a => !!a.match(/DrBaumann,Harry"[0-9]{5,}"/)
+      ],
+      hint: [
+        "Use the command <i>count</i> followed by a regex which matches the name 'Baumann'",
+        "Use the command <i>count</i> followed by a regex which matches both the name 'Baumann' and the name 'Bauman'",
+        'Use the command <i>find</i> followed by a regex which matches any one or two digit number within quote marks'
+      ],
+      document: `
 Meyer, Mateusz "0879"
 Moss, Alexander "32117"
 White, Andrey Irina "3079"
@@ -238,8 +177,32 @@ Keller, Paulina E "67528"
 Williams, Nick "11425"
 Moser, Daniel "74864"
 Moser, Natalia "91713"
-Wood, Vlad "009905"`,
-    ''
+Wood, Vlad "009905"`
+    },
+    {
+      title: 'End of Missions',
+      goal: [
+        '',
+        ''
+      ],
+      solution: [
+
+      ],
+      hint: [
+
+      ],
+      document: `
+      `
+    }
+  ],
+  fail: [
+    '\nAs a result of your incompetence, our enemies have carpet bombed a small rural village',
+    '\nYou have brought shame on our unit in the eyes of The Commander',
+    '\nYour error has led to one our agents in the field being waterboarded',
+    '\nYou are a failure, just like your father!',
+    '\nA messenger has been dispatched to inform your mother of your incompetence',
+    '\nYou have been added to The Commander\'s list.. and not the good one',
+    '\nWhy has the lord brought you to me, why must I be punished!'
   ],
   regex: {
     default: `
@@ -267,7 +230,6 @@ Enter <i>regex all</i> for a summary of all special characters`,
   matches either the character before or the character after this symbol
   ex. <i>/ab|c/</i> matches 'ab' and 'ac'
 
-
 More options for <i>regex</i> command:
   <span class="i-list"><i>wildcard</i>      <i>repeat</i>    <i>group</i>      <i>range</i></span>
   <span class="i-list"><i>whitespace</i>    <i>escape</i>    <i>replace</i>    <i>all</i></span>`,
@@ -277,7 +239,6 @@ More options for <i>regex</i> command:
 .
   matches any character (except for a line break)
   ex. <i>/ab./</i> matches 'abc', 'ab9', 'ab?', 'ab ', etc.
-
 
 More options for <i>regex</i> command:
   <span class="i-list"><i>or</i>            <i>repeat</i>    <i>group</i>       <i>range</i></span>
@@ -324,7 +285,6 @@ More options for <i>regex</i> command:<span class="i-list">
   matches any character not inside
   ex. <i>/[^bc]/</i> matches 'a', 'd', 'e', etc.
       <i>/[^0-6]/</i> matches '7', '8', '9', etc.
-
 
 More options for <i>regex</i> command:<span class="i-list">
   <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>repeat</i>     <i>group</i></span>
@@ -427,6 +387,6 @@ The following commands can be used to manipulate a document:
   Replaces text found in a document by a given regex with new text given in\n  single-quotes, then outputs the document
   The replacement text can also include a replace pattern
   ex. <i>replace /[0-9]/ '0'</i> outputs a document with all numbers replaced with zeros
-      <i>replace /([0-9])([0-9])/ '$2'</i> outputs a document where all two digit numbers\n      have had their first digit removed`
+      <i>replace /([0-9])([0-9])/ '$2'</i> outputs a document with all two digit numbers\n      replaced with just their second digit`
   }
 };
