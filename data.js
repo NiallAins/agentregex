@@ -3,7 +3,7 @@ const content = {
     default: `
 <span class="title">-- HELP</span>
 
-Enter commands in the console to perform actions
+Enter commands in the console input below
 Use the up and down arrow keys to scroll through previous commands
 
 Commands:
@@ -264,7 +264,7 @@ More options for <i>regex</i> command:
       <i>/ab{2,4}/</i>   matches 'abb', 'abbb' and 'abbbb'
       <i>/ab{2,}/</i>    matches 'a' followed by 'b' 2 or more times
 
-More options for <i>regex</i> command:<span class="i-list">
+More options for <i>regex</i> command:
   <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>group</i>      <i>range</i></span>
   <span class="i-list"><i>whitespace</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     range: `
@@ -286,7 +286,7 @@ More options for <i>regex</i> command:<span class="i-list">
   ex. <i>/[^bc]/</i> matches 'a', 'd', 'e', etc.
       <i>/[^0-6]/</i> matches '7', '8', '9', etc.
 
-More options for <i>regex</i> command:<span class="i-list">
+More options for <i>regex</i> command:
   <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>repeat</i>     <i>group</i></span>
   <span class="i-list"><i>whitespace</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     group: `
@@ -297,7 +297,7 @@ More options for <i>regex</i> command:<span class="i-list">
   ex. <i>/a(bc)+/</i> matches 'abc', 'abcbc', 'abcbcbc', etc.
 
 
-More options for <i>regex</i> command:<span class="i-list">
+More options for <i>regex</i> command:
   <span class="i-list"><i>or</i>            <i>wildcard</i>    <i>repeat</i>     <i>range</i></span>
   <span class="i-list"><i>whitespace</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     replace: `
@@ -308,11 +308,13 @@ $&
   ex. <i>replace /ab/ '$& $& '</i> will turn the text 'abcd' into 'ab ab cd'
 
 $1
-  used in a replace function to insert a specific numbered group
-  ex. <i>replace /(ab)(cd)/ '$2 ef $1'</i> will turn the text 'adcd' into 'cd ef ab'
+  used in a replace command to insert a specific numbered group
+  used in a find command to only output a specific numbered group
+  ex. <i>replace /(ab)(cd)/ '$2 ABC $1'</i> will turn the text 'abcd' into 'cd ABC ab'
+      <i>find /(ab)(c|d)/ '$2'</i> will output just the 'c|d' part of any matches found
 
 
-More options for <i>regex</i> command:<span class="i-list">
+More options for <i>regex</i> command:
   <span class="i-list"><i>or</i>       <i>wildcard</i>      <i>repeat</i>    <i>group</i></span>
   <span class="i-list"><i>range</i>    <i>whitespace</i>    <i>escape</i>    <i>all</i></span>`,
     whitespace: `
@@ -330,7 +332,7 @@ More options for <i>regex</i> command:<span class="i-list">
 \\t
   matches a tab character
 
-More options for <i>regex</i> command:<span class="i-list">
+More options for <i>regex</i> command:
   <span class="i-list"><i>or</i>       <i>wildcard</i>    <i>repeat</i>     <i>group</i></span>
   <span class="i-list"><i>range</i>    <i>escape</i>      <i>replace</i>    <i>all</i></span>`,
     escape: `
