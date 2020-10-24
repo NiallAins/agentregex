@@ -189,6 +189,7 @@ conInput.addEventListener('keyup', e => {
             hintRequested = false;
             goalNum = 0;
             missionNum += 1;
+            currentMission = content.mission[missionNum];
             loadText(
               currentMission.title +
               '\n<span class="error">Mission Goal Failed</span>\n' +
@@ -356,7 +357,9 @@ function loadText(text, isDoc = false, appendText = '') {
         );
         if (overflow > 0) {
           loader.innerHTML = `[${overflow + appendLines} more line${overflow + appendLines === 1 ? '' : 's'}]`;
-          loader.innerHTML += appendText.replace(/^\n/g, '\n[').replace(/$/, ']');
+          if (appendText) {
+            loader.innerHTML += appendText.replace(/^\n/g, '\n[').replace(/$/, ']');
+          }
         } else {
           loader.innerHTML += appendText;
         }
