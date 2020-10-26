@@ -32,7 +32,7 @@ conInput.addEventListener('keyup', e => {
   //
   // Enter a command
   //
-  if (e.code == 'Enter') {
+  if (e.key == 'Enter') {
     document.getElementById('debug').innerHTML += '\n' + conInput.value;
     if (conInput.value === '') {
       return;
@@ -159,7 +159,6 @@ conInput.addEventListener('keyup', e => {
           }
           break;
 
-
         //
         // Display mission hint
         //
@@ -239,13 +238,13 @@ conInput.addEventListener('keyup', e => {
   //
   //  Command history
   //
-  else if (e.code === 'ArrowUp') {
+  else if (e.key === 'ArrowUp') {
     if (historyPlace < history.length - 1) {
       historyPlace += 1;
       conInput.value = history[historyPlace];
       setTimeout(() => conInput.selectionStart = conInput.selectionEnd = 10000);
     }
-  } else if (e.code === 'ArrowDown') {
+  } else if (e.key === 'ArrowDown') {
     if (historyPlace > -1) {
       historyPlace -= 1;
       conInput.value = historyPlace === -1 ? '' : history[historyPlace];
@@ -272,7 +271,7 @@ conInput.addEventListener('keyup', e => {
 // Parse comand line input arguments
 //
 function parseCommand(str) {
-  let parts = str.split(' ');
+  let parts = str.toLowerCase().split(' ');
   if (parts[0] === 'find' || parts[0] === 'count' || parts[0] === 'replace') {
     let command = parts.shift();
     return [command, parts.join(' ')];

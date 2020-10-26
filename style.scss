@@ -1,4 +1,4 @@
-$c_bg: #222;
+$c_bg: #181818;
 $c_bg_l: #383838;
 $c_bg_ll: #555;
 $c_border: #555;
@@ -8,6 +8,25 @@ $c_text_d: #aaa;
 $c_text_g: #11d272;
 $c_text_r: #e23c3c;
 $line-height: 20px;
+
+// @include upto(
+//   mobile | tablet | [max-width],
+//   [property], [value], ...
+// );
+@mixin upto($p...) {
+  $width: nth($p, 1);
+  @if $width == mobile {
+    $width: 520px;
+  }
+  @if $width == tablet {
+    $width: 768px;
+  }
+  @media (max-width: $width) {
+    @for $i from 0 to ((length($p) - 1) / 2) {
+      #{nth($p, ($i * 2) + 2)}: #{nth($p, ($i * 2) + 3)};
+    }
+  }
+}
 
 @keyframes blink {
     0% { opacity: 1; }
@@ -59,6 +78,10 @@ input {
   i {
     line-height: $line-height;
   }
+}
+
+input {
+  @include upto(mobile, font-size, 18px);
 }
 
 main {

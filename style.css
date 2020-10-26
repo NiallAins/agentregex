@@ -46,7 +46,7 @@
   opacity: 0.5;
   color: #aaa;
   font-size: 12px;
-  background: #222;
+  background: #181818;
   resize: none;
 }
 
@@ -58,7 +58,7 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden;
-  background: #222;
+  background: #181818;
 }
 
 main,
@@ -82,6 +82,12 @@ input #docLoader,
 input b,
 input i {
   line-height: 20px;
+}
+
+@media (max-width: 520px) {
+  input {
+    font-size: 18px;
+  }
 }
 
 main {
@@ -202,7 +208,7 @@ main #conContain b {
   left: 16px;
   height: 32px;
   right: 16px;
-  background: #222;
+  background: #181818;
 }
 
 #conContain input {
@@ -212,7 +218,7 @@ main #conContain b {
   z-index: 20;
   width: calc(100% - 16px);
   height: 32px;
-  background: #222;
+  background: #181818;
   padding: 4px 8px 4px 40px;
   -webkit-transition: border-color 0.5s;
   transition: border-color 0.5s;
@@ -246,7 +252,7 @@ main #conContain b {
   bottom: 0px;
   z-index: 10;
   padding: 20px 16px;
-  background: #222;
+  background: #181818;
 }
 
 #conContain .textLoader {

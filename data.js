@@ -47,8 +47,8 @@ We believe several brothers of the infamous Baumann family are currently working
 Count how many of these brothers are included in the data
 
 
-Enter <i>submit</i> once you have the correct information in the console output
-Enter <i>hint</i> to request assistance`,
+<i>submit</i> once you have the correct information in the console output
+<i>hint</i> to request assistance`,
         `
 We have now found that some members of the Baumann family spell their name <span class="nobreak">with only a single 'n'</span>
 Accounting for this, re-count the number of brothers in the data`,
@@ -64,7 +64,7 @@ You have exposed the Baumann brothers' data and sabotaged Harry Baumann's rank; 
 The High Commander commends your success!
 
 
-Enter <i>submit</i> once you are ready to receive your next mission`
+<i>submit</i> once you are ready to receive your next mission`
       ],
       solution: [
         '4',
@@ -222,7 +222,7 @@ Enter <i>regex</i> followed by one of keywords below to learn more special chara
   <span class="i-list"><i>or</i>       <i>wildcard</i>      <i>repeat</i>    <i>group</i></span>
   <span class="i-list"><i>range</i>    <i>whitespace</i>    <i>escape</i>    <i>replace</i></span>
 
-Enter <i>regex all</i> for a summary of all special characters`,
+<i>regex all</i> for a summary of all special characters`,
     or: `
 <span class="title">-- REGEX or</span>
 
