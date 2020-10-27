@@ -77,6 +77,13 @@ input {
   b,
   i {
     line-height: $line-height;
+
+    .sp-1 {
+      margin-right: -0.25em;
+    }
+    .sp-2 {
+      margin-right: -0.5em;
+    }
   }
 }
 

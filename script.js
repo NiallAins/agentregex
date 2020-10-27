@@ -68,7 +68,7 @@ conInput.addEventListener('keyup', e => {
                 )
                 .join('\n'),
                 false,
-                '\nEnter <i>submit</i> to submit this output'
+                '\n<i>submit</i> to submit this output'
               )
             } else {
               loadText('\n[No matches found]');
@@ -102,7 +102,7 @@ conInput.addEventListener('keyup', e => {
                 `<b${params[1] === '' ? ' class="empty"' : ''}>${params[1] || ' '}</b>`
               ),
               false,
-              `\n${replaces} edit${replaces === 1 ? '' : 's'} made, enter <i>submit</i> to submit this document`
+              `\n[${replaces} edit${replaces === 1 ? '' : 's'} made]\n<i>submit</i> to submit this document`
             )
           } 
           break;
@@ -120,7 +120,7 @@ conInput.addEventListener('keyup', e => {
                 || 0
               ),
               false,
-              '\nEnter <i>submit</i> to submit this output'
+              '\n<i>submit</i> to submit this output'
             );
           } else {
             loadText('</br><span class="error">Invalid regex:</span> <i>' + command[1] + '</i>');
@@ -153,8 +153,8 @@ conInput.addEventListener('keyup', e => {
               currentMission.title +
               '\n<span class="error">Attempt Failed</span>\n' +
               content.fail[Math.floor(Math.random() * content.fail.length)] +
-              '\n\n\nEnter <i>submit</i> again once you have the correct information in the console output' +
-              '\n\nEnter <i>hint</i> to request assistance\nEnter <i>skip</i> to give up on this mission goal'
+              '\n\n\n<i>submit</i>  again when you have the correct information in the console output' +
+              '\n<i>hint</i>    request assistance\n<i>skip</i>    give up on this mission goal'
             loadText(failText);
           }
           break;
@@ -175,8 +175,8 @@ conInput.addEventListener('keyup', e => {
           loadText(
             '\n<span class="title">-- REQUESTNG HINT</span>\n\n' +
             hint +
-            '\n\n\nEnter <i>functions</i> to learn more about the <i>count</i>, <i>find</i> and <i>replace</i> commands' +
-            '\nEnter <i>regex</i> to learn more about creating regex patterns'
+            '\n\n\n<i>functions</i>  learn about the commands <i>count</i>, <i>find</i> and <i>replace</i>' +
+            '\n<i class="sp-1">regex</i>      learn about creating regex patterns'
           );
           break;
 
@@ -230,6 +230,7 @@ conInput.addEventListener('keyup', e => {
       console.log(e);
       loadText('</br><span class="error">Invalid command</span>');
     }
+
     history.unshift(conInput.value);
     historyPlace = -1;
     conInput.value = '';
@@ -271,7 +272,8 @@ conInput.addEventListener('keyup', e => {
 // Parse comand line input arguments
 //
 function parseCommand(str) {
-  let parts = str.toLowerCase().split(' ');
+  let parts = str.split(' ');
+  parts[0] = parts[0].toLowerCase();
   if (parts[0] === 'find' || parts[0] === 'count' || parts[0] === 'replace') {
     let command = parts.shift();
     return [command, parts.join(' ')];
@@ -357,7 +359,7 @@ function loadText(text, isDoc = false, appendText = '') {
         if (overflow > 0) {
           loader.innerHTML = `[${overflow + appendLines} more line${overflow + appendLines === 1 ? '' : 's'}]`;
           if (appendText) {
-            loader.innerHTML += appendText.replace(/^\n/g, '\n[').replace(/$/, ']');
+            loader.innerHTML += appendText;
           }
         } else {
           loader.innerHTML += appendText;

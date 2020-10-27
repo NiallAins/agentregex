@@ -84,6 +84,36 @@ input i {
   line-height: 20px;
 }
 
+main #conContain .sp-1,
+main #docContain .sp-1,
+main #conLoader .sp-1,
+main #docLoader .sp-1,
+main b .sp-1,
+main i .sp-1,
+input #conContain .sp-1,
+input #docContain .sp-1,
+input #conLoader .sp-1,
+input #docLoader .sp-1,
+input b .sp-1,
+input i .sp-1 {
+  margin-right: -0.25em;
+}
+
+main #conContain .sp-2,
+main #docContain .sp-2,
+main #conLoader .sp-2,
+main #docLoader .sp-2,
+main b .sp-2,
+main i .sp-2,
+input #conContain .sp-2,
+input #docContain .sp-2,
+input #conLoader .sp-2,
+input #docLoader .sp-2,
+input b .sp-2,
+input i .sp-2 {
+  margin-right: -0.5em;
+}
+
 @media (max-width: 520px) {
   input {
     font-size: 18px;

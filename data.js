@@ -26,13 +26,13 @@ Commands:
       goal: [`
 We have gained access to our enemy's communication network
 Using this connection, and your skills, we will attempt to gather intelligence and undertake sabotage operations
-To minimise the chance of detection by our enemy's bandwidth monitoring, try to submit your commands in their shortest possible form
+To minimise the chance of detection by our enemy's bandwidth monitoring, try to submit your commands in their shortest form
     
 The Commander wishes you luck
     
 
-Enter <i>submit</i> once you are ready to receive your first mission
-Enter <i>help</i> to return to the help page`
+<i>submit</i>  receive your first mission
+<i>help</i>    return to the help page`
       ],
       hint: [],
       document: '',
@@ -47,30 +47,29 @@ We believe several brothers of the infamous Baumann family are currently working
 Count how many of these brothers are included in the data
 
 
-<i>submit</i> once you have the correct information in the console output
-<i>hint</i> to request assistance`,
+<i>hint</i>  request assistance`,
         `
 We have now found that some members of the Baumann family spell their name <span class="nobreak">with only a single 'n'</span>
 Accounting for this, re-count the number of brothers in the data`,
         `
 Our intel has found that lower ID numbers are assigned to the most important agents
-Find the ID numbers of any agent ranking in the top 100 most important`,
+Find the ID numbers of any agent ranking in the top 10 most important`,
         `
 Harry Baumann seems to be the highest ranked of the brothers in our data... and so the worst of our enemies!
-Replace his ID number with a number above 10,000 to demote him and sabotage his credentials`,
+Replace his ID number with a number above 1000 to demote him and sabotage his credentials`,
         `
 You have exposed the Baumann brothers' data and sabotaged Harry Baumann's rank; as a result his medical license will be revoked and his pediatrics research work destroyed
 
 The High Commander commends your success!
 
 
-<i>submit</i> once you are ready to receive your next mission`
+<i>submit</i>  receive your next mission`
       ],
       solution: [
         '4',
         '6',
-        a => a === '"10""7""3""6""14""16""7""12""14""85"' || a === '1073614167121485',
-        a => !!a.match(/DrBaumann,Harry"[0-9]{5,}"/)
+        a => a === '"4""7""9""3""6""7"' || a === '479367',
+        a => !!a.match(/DrBaumann,Harry"[0-9]{4,}"/i)
       ],
       hint: [
         "Use the command <i>count</i> followed by a regex which matches the name 'Baumann'",
@@ -81,7 +80,7 @@ The High Commander commends your success!
 Meyer, Mateusz "0879"
 Moss, Alexander "32117"
 White, Andrey Irina "3079"
-Moss, Mary J "10"
+Moss, Mary J "4"
 Taylor, Marina B "78680"
 Steiner, Liza "87184"
 Baumann, Artem David "311"
@@ -95,7 +94,7 @@ Moss, Daniel "74465"
 Evans, Alex J "5666"
 Dris, Liza Anastasia "16787"
 Davies, Alex "43436"
-Dr Baumann, Harry "68200"
+Dr Baumann, Harry "9"
 White, David M "7727"
 Thomas, John "60596"
 Smith, Natalia "3945"
@@ -222,7 +221,7 @@ Enter <i>regex</i> followed by one of keywords below to learn more special chara
   <span class="i-list"><i>or</i>       <i>wildcard</i>      <i>repeat</i>    <i>group</i></span>
   <span class="i-list"><i>range</i>    <i>whitespace</i>    <i>escape</i>    <i>replace</i></span>
 
-<i>regex all</i> for a summary of all special characters`,
+Enter <i>regex all</i> for a summary of all special characters`,
     or: `
 <span class="title">-- REGEX or</span>
 
